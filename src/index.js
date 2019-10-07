@@ -1,5 +1,5 @@
 import React from 'react';
-import './css/index.scss';
+import './assets/css/index.scss';
 
 import * as serviceWorker from './serviceWorker';
 
