@@ -6,10 +6,10 @@ import * as serviceWorker from './serviceWorker';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
-import logger from 'redux-logger'
+import logger from 'redux-logger';
 import ReduxPromise from 'redux-promise';
 
-import App from './components/App';
+import App from './App';
 import reducers from './redux/reducers';
 
 const createStoreWithMiddleware = applyMiddleware(ReduxPromise, logger)(createStore);
