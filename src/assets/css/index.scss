@@ -1,1 +1,12 @@
-@import './App';
+
+@import './App'; // Remove when redundant
+
+// helpers
+@import './helpers/colors.scss';
+@import './helpers/borders.scss';
+
+// Screens
+@import './screens/swiper-test.scss';
+
+// Components
+@import './components/swiper-card.scss';
