@@ -6,8 +6,8 @@ import SwipeTest from './screens/SwipeTest';
 function App() {
   return (
     <Router>
-      <Route path="/" exact component={Home} />
-      <Route path="/swiper-test" exact component={SwipeTest} />
+      <Route path="/" exact component={SwipeTest} />
+      <Route path="/home-old" exact component={Home} />
     </Router>
   );
 }
