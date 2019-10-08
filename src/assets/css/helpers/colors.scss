@@ -1,5 +1,6 @@
 $color-black: #000000;
 $color-gray: #777777;
+$color-light-gray: #F9F9F9;
 $color-white: #ffffff;
 
 $color-red: #FC6170;
@@ -7,3 +8,9 @@ $color-orange: #FF8A47;
 $color-cyan: #8CEEEE;
 $color-blue: #26BFBF;
 $color-yellow: #FFD747;
+$color-light-red: #FFDCDC;
+$color-light-green: #E6F4DC;
+
+$color-gradient-red: linear-gradient(to top right, #FF4B2B, #FF416C);
+$color-gradient-green: linear-gradient(to top right, #56AB2F, #A8E063);
+$color-gradient-blue: linear-gradient(to top right, #26BFBF, #8CEEEE);
