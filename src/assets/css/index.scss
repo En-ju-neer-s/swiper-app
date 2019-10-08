@@ -4,9 +4,10 @@
 // helpers
 @import './helpers/colors.scss';
 @import './helpers/borders.scss';
+@import './helpers/shadows.scss';
 
 // Screens
-@import './screens/swiper-test.scss';
+@import './screens/swipe-test.scss';
 
 // Components
-@import './components/swiper-card.scss';
+@import './components/swipe-card.scss';
