@@ -1,10 +1,10 @@
 import React from 'react';
-import SwipeCard from '../components/SwipeCard';
+import SwipeDeck from '../components/SwipeDeck';
 
 function SwipeTest() {
     return (
         <div className="swipe-test">
-            <SwipeCard />
+            <SwipeDeck />
         </div>
     );
 }
