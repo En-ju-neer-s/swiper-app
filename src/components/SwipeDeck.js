@@ -7,11 +7,11 @@ class SwipeDeck extends Component {
         this.state = {
             renderCard: true
         };
-        this.removeCard = this.removeCard.bind(this);
+        this.toggleCard = this.toggleCard.bind(this);
     }
 
-    removeCard() {
-        this.setState({ renderCard: false });
+    toggleCard() {
+        this.setState({ renderCard: !this.state.renderCard });
     }
 
     render() {
@@ -21,9 +21,9 @@ class SwipeDeck extends Component {
         return (
             <div className="swipe-deck">
                 {renderCard ?
-                    <SwipeCard unmountCard={this.removeCard}>Test</SwipeCard>
+                    <SwipeCard unmountCard={this.toggleCard}>Test</SwipeCard>
                     :
-                    <span>removed</span>
+                    <span onClick={() => {this.toggleCard()}}>removed</span>
                 }
             </div>
         );
