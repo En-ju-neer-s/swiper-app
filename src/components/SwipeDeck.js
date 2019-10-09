@@ -21,7 +21,7 @@ class SwipeDeck extends Component {
         return (
             <div className="swipe-deck">
                 {renderCard ?
-                    <SwipeCard unmountCard={this.removeCard} />
+                    <SwipeCard unmountCard={this.removeCard}>Test</SwipeCard>
                     :
                     <span>removed</span>
                 }
