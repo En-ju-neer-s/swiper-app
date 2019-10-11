@@ -7,10 +7,10 @@ export const SwipeCard = (props) => {
     function swipeClassifier(e, i) {
         if (i.offset.x >= 250) {
             console.log(false);
-            props.unmountCard();
+            // props.unmountCard();
         } else if (i.offset.x <= -250) {
             console.log(true);
-            props.unmountCard();
+            // props.unmountCard();
         }
     }
 
@@ -23,9 +23,11 @@ export const SwipeCard = (props) => {
     ]);
     const rotate = useTransform(x, xInput, [-45, 0, 45]);
 
+    // const card =
+    console.log('disabled?',props.disabled)
     return (
         <motion.div
-            drag
+            drag={props.disabled}
             dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
             onDrag={(e, i) => {
                 swipeClassifier(e, i);
@@ -34,7 +36,7 @@ export const SwipeCard = (props) => {
             style={{ x, backgroundColor, rotate }}
         >
             {props.children}
-        </motion.div>
+        </motion.div>        
     )
 }
 

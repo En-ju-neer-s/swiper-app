@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import SwipeCard from './SwipeCard'
 
 class SwipeDeck extends Component {
     constructor(props) {
@@ -8,6 +7,16 @@ class SwipeDeck extends Component {
             renderCard: true
         };
         this.toggleCard = this.toggleCard.bind(this);
+
+        this.state = ({
+            cards: []
+        });
+    }
+
+    componentDidMount() {
+        this.setState({
+            cards: this.props.children
+        })
     }
 
     toggleCard() {
@@ -20,11 +29,7 @@ class SwipeDeck extends Component {
 
         return (
             <div className="swipe-deck">
-                {renderCard ?
-                    <SwipeCard unmountCard={this.toggleCard}>Test</SwipeCard>
-                    :
-                    <span onClick={() => {this.toggleCard()}}>removed</span>
-                }
+                {this.state.cards}
             </div>
         );
     }
