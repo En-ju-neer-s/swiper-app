@@ -28,7 +28,7 @@ class SwipeDeck extends Component {
         console.log('render', renderCard);
 
         return (
-            <div className="swipe-deck">
+            <div className="c-swipe-deck">
                 {this.state.cards}
             </div>
         );

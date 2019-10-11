@@ -33,7 +33,6 @@ export const SwipeCard = (props) => {
             onDrag={(e, i) => {
                 swipeClassifier(e, i);
             }}
-            className="swipe-card"
             style={{ x, backgroundColor, rotate }}
         >
             {props.children}
