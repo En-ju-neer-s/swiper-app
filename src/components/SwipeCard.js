@@ -24,7 +24,7 @@ export const SwipeCard = () => {
     return (
         <motion.div
             drag
-            className="swipe-card"
+            className="c-swipe-card"
             dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
             style={{ x, backgroundColor, rotate }}
             onDrag={(e, i) => {
