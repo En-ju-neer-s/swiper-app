@@ -1,0 +1,22 @@
+.c-header {
+    width: 100%;
+    left: 0;
+    top: 0;
+    position: fixed;
+    background-color: $color-light-gray;
+}
+
+.header__inner {
+    max-width: 300px;
+    margin: 15px auto;
+    position: relative;
+}
+
+.header__info {
+    position: absolute;
+    right: 0;   
+    top: 50%;
+    font-size: 21px;
+    transform: translate3d(0, -50%, 0);
+    color: $color-black;
+}

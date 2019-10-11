@@ -1,0 +1,60 @@
+.c-button {
+    cursor: pointer;
+    padding: 20px;
+    display: inline-block;
+    border-radius: 100px;
+    position: relative;
+    font-weight: 600;
+    user-select: none;
+}
+
+.button--with-text {
+    font-size: 16px;
+    padding-right: 50px;
+    color: $color-white;
+
+    .button__icon {
+        right: 30px;
+    }
+}
+
+.button--large {
+    padding: 40px;
+
+    &.button--with-text {
+        font-size: 32px;
+        padding-right: 80px;
+    
+        .button__icon {
+            right: 40px;
+        }
+    }
+
+    .button__icon {
+        font-size: 32px;
+    }
+}
+
+.button__icon {
+    position: absolute;
+    right: 50%;
+    top: 50%;
+    color: $color-white;
+    font-size: 18px;
+    transform: translate3d(50%, -50%, 0);
+}
+
+.button--red {
+    background: $color-gradient-red;
+    box-shadow: 0 4px 20px $color-red;
+}
+
+.button--green {
+    background: $color-gradient-green;
+    box-shadow: 0 4px 20px $color-green;
+}
+
+.button--blue {
+    background: $color-gradient-blue;
+    box-shadow: 0 4px 20px $color-blue;
+}

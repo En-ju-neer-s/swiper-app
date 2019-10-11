@@ -24,10 +24,11 @@ export const SwipeCard = (props) => {
     const rotate = useTransform(x, xInput, [-45, 0, 45]);
 
     // const card =
-    console.log('disabled?',props.disabled)
+    console.log('disabled?', props.disabled)
     return (
         <motion.div
             drag={props.disabled}
+            className="c-swipe-card"
             dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
             onDrag={(e, i) => {
                 swipeClassifier(e, i);
@@ -36,7 +37,7 @@ export const SwipeCard = (props) => {
             style={{ x, backgroundColor, rotate }}
         >
             {props.children}
-        </motion.div>        
+        </motion.div>
     )
 }
 

@@ -1,10 +1,12 @@
 
 @import './App'; // Remove when redundant
 
-// helpers
-@import './helpers/colors.scss';
-@import './helpers/borders.scss';
-@import './helpers/shadows.scss';
+// Core
+@import './core/colors.scss';
+@import './core/borders.scss';
+@import './core/shadows.scss';
+@import './core/icons.scss';
+@import './core/headings.scss';
 
 // Screens
 @import './screens/swipe-test.scss';
@@ -12,3 +14,5 @@
 // Components
 @import './components/swipe-card.scss';
 @import './components/swipe-deck.scss';
+@import './components/button.scss';
+@import './components/header.scss';
