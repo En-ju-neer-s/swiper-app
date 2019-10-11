@@ -1,22 +1,26 @@
 .c-swipe-card {
     width: 250px;
-    height: 300px;
+    height: 350px;
+    font-size: 15px;
     border-radius: $border-radius;
     box-shadow: $shadow;
     position: absolute;
     top: 0;
     z-index: 9;
     opacity: 0;
+    padding: 10px 30px;
     transition:
         top .3s ease,
         width .3s ease-in-out,
         height .3s ease-in-out,
-        opacity .3s ease-in-out;
+        opacity .3s ease-in-out,
+        font-size .3s ease-in-out;
     
     &:nth-child(1) {
         position: absolute;
         top: 25px;
         margin-bottom: 80px;
+        font-size: 18px;
         width: 300px;
         height: 400px;
         z-index: 10;
