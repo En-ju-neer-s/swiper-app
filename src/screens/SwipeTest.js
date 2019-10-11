@@ -5,10 +5,16 @@ import Button from '../components/Button';
 import Header from '../components/Header';
 
 function SwipeTest() {
+
+
+
     return (
         <div className='s-swipe-test'>
             <Header title='Vind je dit clickbait?' />
             <SwipeDeck>
+                <SwipeCard disabled />
+                <SwipeCard disabled />
+                <SwipeCard disabled />
                 <SwipeCard disabled />
                 <SwipeCard />
             </SwipeDeck>
