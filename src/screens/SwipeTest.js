@@ -7,8 +7,8 @@ function SwipeTest() {
         <div className='s-swipe-test'>
             <SwipeCard />
             <div className='swipe-test__buttons'>
-                <Button color='red' large={true} icon='remove' />
-                <Button color='green' large={true} icon='check' />
+                <Button color='red' large={true} icon='cancel' />
+                <Button color='green' large={true} icon='ok' />
             </div>
         </div>
     );

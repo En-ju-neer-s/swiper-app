@@ -5,15 +5,16 @@
     border-radius: 100px;
     position: relative;
     font-weight: 600;
+    user-select: none;
 }
 
 .button--with-text {
     font-size: 16px;
-    padding-right: 60px;
+    padding-right: 50px;
     color: $color-white;
 
     .button__icon {
-        right: 20px;
+        right: 30px;
     }
 }
 
@@ -28,50 +29,19 @@
             right: 40px;
         }
     }
+
+    .button__icon {
+        font-size: 32px;
+    }
 }
 
 .button__icon {
     position: absolute;
     right: 50%;
     top: 50%;
+    color: $color-white;
+    font-size: 18px;
     transform: translate3d(50%, -50%, 0);
-}
-
-.button__icon--check {
-    width: 10px;
-    height: 25px;
-
-    &::before{
-        content: '';
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        border-bottom: 4px solid $color-white;
-        border-right: 4px solid $color-white;
-        transform: rotate(45deg);
-    }
-}
-
-.button__icon--remove {
-    width: 4px;
-    height: 33px;
-
-    &::before,
-    &::after {
-        content: '';
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        background-color: $color-white;
-    }
-
-    &::before {
-        transform: rotate(45deg);
-    }
-
-    &::after {
-        transform: rotate(-45deg);
-    }
 }
 
 .button--red {
