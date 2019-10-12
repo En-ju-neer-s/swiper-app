@@ -1,14 +1,30 @@
 import React from 'react';
 
-import { motion, useMotionValue, useTransform } from "framer-motion";
-import { identifier } from '@babel/types';
+import { motion, useMotionValue, useTransform, useAnimation } from "framer-motion";
 
-export const SwipeCard = () => {
-    function swipeClassifier(e, i){
+export const SwipeCard = (props) => {
+
+    const controls = useAnimation();
+
+    function swipeClassifier(i) {
         if (i.offset.x >= 250) {
-            console.log(false)
+            controls.start({
+                x: '1000px',
+                transition: { duration: 0.6 },
+            });
+            setTimeout(() => {
+                console.log(true);
+                props.swipeRight();
+            }, 600);
         } else if (i.offset.x <= -250) {
-            console.log(true);
+            controls.start({
+                x: '-1000px',
+                transition: { duration: 0.6 },
+            });
+            setTimeout(() => {
+                console.log(false);
+                props.swipeLeft();
+            }, 600);
         }
     }
 
@@ -23,14 +39,18 @@ export const SwipeCard = () => {
 
     return (
         <motion.div
-            drag
+            drag={props.disabled}
             className="c-swipe-card"
+            id={props.id}
             dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
-            style={{ x, backgroundColor, rotate }}
-            onDrag={(e, i) => {
-                swipeClassifier(e,i)
+            onDragEnd={(e, i) => {
+                swipeClassifier(i);
             }}
+            animate={controls}
+            style={{ x, backgroundColor, rotate }}
         >
+            <h1>{props.title}</h1>
+            {props.children}
         </motion.div>
     )
 }

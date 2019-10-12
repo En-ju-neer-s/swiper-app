@@ -7,7 +7,7 @@ class Header extends React.Component {
     }
 
     render() {
-        const {title} = this.props;
+        const { title } = this.props;
         return (
             <div>
                 <div className={`c-header`}>
@@ -16,7 +16,6 @@ class Header extends React.Component {
                         <i className='header__info u-icon icon--info-circled'></i>
                     </div>
                 </div>
-                <InfoScreen active={true} title={`Trump geeft Noord-Syrië aan Turkije weg, wat houdt dat in?`} date={`21-21-21`} source={`https://www.google.com`} body={`De relatieve rust in Noord-Syrië lijkt om te slaan in nieuw oorlogsgeweld. Enkele uren na een telefoontje tussen de Amerikaanse president Trump en de Turkse president Erdogan begonnen Amerikaanse troepen zich vanochtend terug te trekken uit het gebied. Het maakt de weg vrij voor een Turkse aanval op de Koerden.`} buttonIcon={`cancel`} buttonText={`Sluiten`} />
             </div>
 
         )

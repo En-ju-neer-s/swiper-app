@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 
 class Button extends React.Component {
     constructor(props) {
@@ -6,12 +7,20 @@ class Button extends React.Component {
     }
 
     render() {
-        const {color, large, icon, text, link} = this.props;
+        const { color, large, icon, text, link, onClick } = this.props;
+        const buttonClasses = classNames({
+            'c-button': true,
+            [`button--${color}`]: color,
+            'button--large': large,
+            'button--small': !large,
+            'button--with-text': text,
+            icon
+        });
         return (
-            <a className={`c-button button--${color} ${large ? 'button--large' : 'button--small'} ${icon} ${text ? 'button--with-text' : ''}`} href={link}>
+            <a className={buttonClasses} href={link} onClick={onClick}>
                 {text}
                 {icon &&
-                    <i class={`button__icon u-icon icon--${icon}`}></i>
+                    <i className={`button__icon u-icon icon--${icon}`}></i>
                 }
             </a>
         )
