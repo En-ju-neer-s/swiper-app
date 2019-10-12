@@ -7,17 +7,17 @@ class Button extends React.Component {
     }
 
     render() {
-        const { color, large, icon, text, link } = this.props;
+        const { color, large, icon, text, link, onClick } = this.props;
         const buttonClasses = classNames({
             'c-button': true,
-            [`button--${ color }`]: color,
+            [`button--${color}`]: color,
             'button--large': large,
             'button--small': !large,
             'button--with-text': text,
             icon
         });
         return (
-            <a className={buttonClasses} href={link}>
+            <a className={buttonClasses} href={link} onClick={onClick}>
                 {text}
                 {icon &&
                     <i className={`button__icon u-icon icon--${icon}`}></i>
