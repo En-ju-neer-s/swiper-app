@@ -40,25 +40,19 @@ class SwipeTest extends React.Component {
         //     });
         this.setState({
             articles: [
-                { title: 'Lorem ipsum 1', id: 'hksafhskjd', date: '20-20-2020', source: 'http://www.nu.nl', body: 'Lorem ipsum' },
-                { title: 'Lorem ipsum 2', id: 'kashfkjshdj', date: '20-20-2020', source: 'http://www.nu.nl', body: 'Lorem ipsum' },
-                { title: 'Lorem ipsum 3', id: 'ehwrjkwnkj', date: '20-20-2020', source: 'http://www.nu.nl', body: 'Lorem ipsum' },
-                { title: 'Lorem ipsum 4', id: 'lijaoiwjdlka', date: '20-20-2020', source: 'http://www.nu.nl', body: 'Lorem ipsum' },
-                { title: 'Lorem ipsum 5', id: 'oijnakdjkwa', date: '20-20-2020', source: 'http://www.nu.nl', body: 'Lorem ipsum' }
+                { title: 'Bruilofts­gast bespuugt beveili­gings­be­amb­te nadat peperdure Lamborghi­ni crasht', id: 'hksafhskjd', date: '20-20-2020', source: 'http://www.nu.nl', body: 'Lorem ipsum' },
+                { title: 'Een afscheid zoals Raffie wilde: ‘Voetbal stelt geen reet voor’', id: 'kashfkjshdj', date: '20-20-2020', source: 'http://www.nu.nl', body: 'Lorem ipsum' },
+                { title: 'NPO 3 scoort pannen van het dak met Stanley H. en Zondag met Lubach', id: 'ehwrjkwnkj', date: '20-20-2020', source: 'http://www.nu.nl', body: 'Lorem ipsum' },
+                { title: 'Angstaanja­gen­de vondst in container langs de A12', id: 'lijaoiwjdlka', date: '20-20-2020', source: 'http://www.nu.nl', body: 'Lorem ipsum' },
+                { title: 'Spanning rond wedstrijd Frank­rijk-Tur­kije: ‘Politieke signalen verboden’', id: 'oijnakdjkwa', date: '20-20-2020', source: 'http://www.nu.nl', body: 'Lorem ipsum' }
             ]
         });
     }
 
     updateArticles(direction) {
         // If function was triggered by buttons
-        if(direction) {
-            const currentCard = document.querySelector('#' + this.state.articles[0].id);
-            if (direction === 'left') {
-                currentCard.style.left = '-2000px';
-            } else {
-                currentCard.style.right = '-2000px';
-            }
-        }
+        const currentCard = document.querySelector('#' + this.state.articles[0].id);
+        if(direction) currentCard.style[direction] = '-200vw';
         
         // Setup popup
         this.setState({
@@ -66,13 +60,10 @@ class SwipeTest extends React.Component {
             infoScreenDate: this.state.articles[0].date,
             infoScreenSource: this.state.articles[0].source,
             infoScreenBody: this.state.articles[0].body
+        }, () => {
+            this.toggleInfoScreen(true);
+            direction ? currentCard.addEventListener('transitionend', () => this.nextArticle()) : this.nextArticle();
         });
-        
-        // Wait before shifting array
-        setTimeout(() => {
-            this.toggleInfoScreen();
-            this.nextArticle();
-        }, 300);
     }
 
     nextArticle(){
@@ -81,9 +72,13 @@ class SwipeTest extends React.Component {
         this.setState({ articles: oldArray });
     }
 
-    toggleInfoScreen(){
-        console.log('toggle toggleInfoScreen');
-        this.setState({infoScreen: !this.state.infoScreen});
+    toggleInfoScreen(boolean){
+        this.setState(
+            {
+                infoScreen: boolean
+            }, () => {
+                if(!boolean) document.documentElement.classList.remove('has--modal');
+            });
     }
 
     render() {

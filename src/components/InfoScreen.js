@@ -1,6 +1,9 @@
 import React from 'react';
 import Button from '../components/Button';
 
+const JS_LOADER = '[js-loader]';
+let loadTimeout;
+
 class InfoScreen extends React.Component {
     constructor(props) {
         super(props);
@@ -9,10 +12,25 @@ class InfoScreen extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.InfoScreen)
         setTimeout(()=>{
             this.InfoScreen.current.classList.add('info-screen--active');
+            this.loader = this.InfoScreen.current.querySelector(JS_LOADER);
+            document.documentElement.classList.add('has--modal');
+
+            this.countShow(0);
         }, 100);
+    }
+
+    countShow(width) {
+        this.loader.style.width = `${width}%`;
+
+        if(width < 100) {
+            loadTimeout = setTimeout(()=>{
+                this.countShow(width + 1);
+            }, 100);
+        } else {
+            this.props.toggleInfoScreen(false);
+        }
     }
 
     render() {
@@ -29,7 +47,7 @@ class InfoScreen extends React.Component {
         return (
             <div className="c-info-screen" ref={this.InfoScreen}>
                 <div className="info-screen__inner">
-                    <div className="c-loader" style={{ width: '80%' }}></div>
+                    <div className="c-loader" js-loader=""></div>
                     <h2>{title}</h2>
                     <p>{body}</p>
                 </div>
@@ -39,7 +57,7 @@ class InfoScreen extends React.Component {
                             <span>{date}</span>
                         }
                         {source &&
-                            <a href={source} className="c-source">Bron</a>
+                            <a href={source} target="_blank" className="c-source"><i class="u-icon icon--link"></i> Bron</a>
                         }
                     </div>
                     <div className={`info-screen__column`}>
@@ -47,7 +65,7 @@ class InfoScreen extends React.Component {
                             color='blue' 
                             icon={buttonIcon} 
                             text={buttonText} 
-                            onClick={() => { toggleInfoScreen() }} />
+                            onClick={() => { clearTimeout(loadTimeout); toggleInfoScreen(false) }} />
                     </div>
                 </div>
             </div>

@@ -50,7 +50,6 @@ export const SwipeCard = (props) => {
             style={{ x, backgroundColor, rotate }}
         >
             <h1>{props.title}</h1>
-            {props.children}
         </motion.div>
     )
 }
