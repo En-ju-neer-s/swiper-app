@@ -4,7 +4,8 @@ import SwipeCard from '../components/SwipeCard';
 import Button from '../components/Button';
 import Header from '../components/Header';
 import InfoScreen from '../components/InfoScreen';
-// import Axios from 'axios';
+import Axios from 'axios';
+import { SWIPER_API } from '../constants';
 
 class SwipeTest extends React.Component {
     constructor(props) {
@@ -29,15 +30,15 @@ class SwipeTest extends React.Component {
     }
 
     fetchArticles() {
-        // axios.get('/user?ID=12345')
-        //     .then(function (response) {
-        //         // handle success
-        //         console.log(response);
-        //     })
-        //     .catch(function (error) {
-        //         // handle error
-        //         console.log(error);
-        //     });
+        Axios.get(SWIPER_API)
+            .then(function (response) {
+                // handle success
+                console.log('response', response);
+            })
+            .catch(function (error) {
+                // handle error
+                console.log('error', error);
+            });
         this.setState({
             articles: [
                 { title: 'Bruilofts­gast bespuugt beveili­gings­be­amb­te nadat peperdure Lamborghi­ni crasht', id: 'hksafhskjd', date: '20-20-2020', source: 'http://www.nu.nl', body: 'Lorem ipsum' },
@@ -52,8 +53,8 @@ class SwipeTest extends React.Component {
     updateArticles(direction) {
         // If function was triggered by buttons
         const currentCard = document.querySelector('#' + this.state.articles[0].id);
-        if(direction) currentCard.style[direction] = '-200vw';
-        
+        if (direction) currentCard.style[direction] = '-200vw';
+
         // Setup popup
         this.setState({
             infoScreenTitle: this.state.articles[0].title,
@@ -66,18 +67,18 @@ class SwipeTest extends React.Component {
         });
     }
 
-    nextArticle(){
+    nextArticle() {
         let oldArray = this.state.articles;
         oldArray.shift();
         this.setState({ articles: oldArray });
     }
 
-    toggleInfoScreen(boolean){
+    toggleInfoScreen(boolean) {
         this.setState(
             {
                 infoScreen: boolean
             }, () => {
-                if(!boolean) document.documentElement.classList.remove('has--modal');
+                if (!boolean) document.documentElement.classList.remove('has--modal');
             });
     }
 
@@ -119,15 +120,15 @@ class SwipeTest extends React.Component {
                         onClick={() => { this.updateArticles('right') }} />
                 </div>
                 {this.state.infoScreen &&
-                <InfoScreen 
-                    active={false}
-                    title={this.state.infoScreenTitle} 
-                    date={this.state.infoScreenDate} 
-                    source={this.state.infoScreenSource} 
-                    body={this.state.infoScreenBody}
-                    toggleInfoScreen={this.toggleInfoScreen}
-                    buttonIcon={`cancel`} 
-                    buttonText={`Sluiten`}  />
+                    <InfoScreen
+                        active={false}
+                        title={this.state.infoScreenTitle}
+                        date={this.state.infoScreenDate}
+                        source={this.state.infoScreenSource}
+                        body={this.state.infoScreenBody}
+                        toggleInfoScreen={this.toggleInfoScreen}
+                        buttonIcon={`cancel`}
+                        buttonText={`Sluiten`} />
                 }
             </div>
         );
