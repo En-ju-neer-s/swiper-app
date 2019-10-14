@@ -106,7 +106,7 @@ class SwipeTest extends React.Component {
                         })
                     }
                 </SwipeDeck>
-                <div className='swipe-test__buttons'>
+                <div className={`swipe-test__buttons ${this.state.articles.length ? '' : 'is--hidden'}`}>
                     <Button
                         color='red'
                         large={true}
