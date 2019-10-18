@@ -6,6 +6,7 @@ import Header from '../components/Header';
 import InfoScreen from '../components/InfoScreen';
 import Axios from 'axios';
 import { SWIPER_API } from '../constants';
+import { getCookie, setCookie } from '../utilities/Cookie';
 
 class SwipeTest extends React.Component {
     constructor(props) {
@@ -13,6 +14,7 @@ class SwipeTest extends React.Component {
 
         this.state = ({
             articles: [],
+            userCode: '',
             infoScreen: false,
             infoScreenTitle: '',
             infoScreenDate: '',
@@ -27,6 +29,10 @@ class SwipeTest extends React.Component {
 
     componentDidMount() {
         this.fetchArticle();
+
+        if (!getCookie()) setCookie('MARK');
+        const userCookie = getCookie().split('|');
+        this.setState({ userCode: userCookie[1] });
 
         //Initialize first five articles
         const initialArticles = 5;
@@ -50,17 +56,16 @@ class SwipeTest extends React.Component {
                 // handle success
                 articleArray.push(response.data[0]);
                 this.setState({ articles: articleArray });
-                console.log(this.state.articles)
             })
             .catch((error) => {
                 console.log('error', error);
             });
     }
 
-    updateArticles(direction) {
+    updateArticles(button, direction) {
         // If function was triggered by buttons
         const currentCard = document.querySelector('#' + this.state.articles[0].id);
-        if (direction) currentCard.style[direction] = '-200vw';
+        if (button) currentCard.style[direction] = '-200vw';
 
         // Setup popup
         this.setState({
@@ -70,15 +75,33 @@ class SwipeTest extends React.Component {
             infoScreenBody: this.state.articles[0].description
         }, () => {
             this.toggleInfoScreen(true);
-            direction ? currentCard.addEventListener('transitionend', () => this.nextArticle()) : this.nextArticle();
+            if (button) {
+                currentCard.addEventListener('transitionend', () => this.nextArticle(this.state.articles[0].primary_key, direction))
+            } else {
+                this.nextArticle(this.state.articles[0].primary_key, direction);
+            }
         });
 
         // Add article to array
         this.fetchArticle();
     }
 
-    nextArticle() {
+    nextArticle(primaryKey, postDirection) {
         let oldArray = this.state.articles;
+
+        const direction = (postDirection === 'left') ? 0 : 1;
+
+        Axios({
+            method: 'POST',
+            url: SWIPER_API + '/swipe/',
+            headers: { 'Content-Type': 'application/json' },
+            data: {
+                "userId": this.state.userCode,
+                "primaryKey": primaryKey,
+                "clickbait": direction
+            }
+        });
+
         oldArray.shift();
         this.setState({ articles: oldArray });
     }
@@ -108,8 +131,8 @@ class SwipeTest extends React.Component {
                                     title={item.title}
                                     key={item.primary_key}
                                     id={item.primary_key}
-                                    swipeLeft={() => { this.updateArticles(); }}
-                                    swipeRight={() => { this.updateArticles(); }}>
+                                    swipeLeft={() => { this.updateArticles(false, 'left'); }}
+                                    swipeRight={() => { this.updateArticles(false, 'right'); }}>
                                     {item.id}
                                 </SwipeCard>
                             );
@@ -122,12 +145,12 @@ class SwipeTest extends React.Component {
                         color='red'
                         large={true}
                         icon='cancel'
-                        onClick={() => { this.updateArticles('left') }} />
+                        onClick={() => { this.updateArticles(true, 'left') }} />
                     <Button
                         color='green'
                         large={true}
                         icon='ok'
-                        onClick={() => { this.updateArticles('right') }} />
+                        onClick={() => { this.updateArticles(true, 'right') }} />
                 </div>
                 {this.state.infoScreen &&
                     <InfoScreen
