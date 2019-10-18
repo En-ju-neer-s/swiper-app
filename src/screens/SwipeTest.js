@@ -26,28 +26,35 @@ class SwipeTest extends React.Component {
     }
 
     componentDidMount() {
-        this.fetchArticles();
+        this.fetchArticle();
+
+        //Initialize first five articles
+        const initialArticles = 5;
+        for (let i = 0; i < (initialArticles - 1); i++) {
+            this.fetchArticle();
+        }
     }
 
-    fetchArticles() {
-        Axios.get(SWIPER_API)
-            .then(function (response) {
+    fetchArticle() {
+        let articleArray = this.state.articles;
+
+        Axios({
+            method: 'POST',
+            url: SWIPER_API + '/title/',
+            headers: { 'Content-Type': 'application/json' },
+            data: {
+                "id": "kjkjlka2e232"
+            }
+        })
+            .then((response) => {
                 // handle success
-                console.log('response', response);
+                articleArray.push(response.data[0]);
+                this.setState({ articles: articleArray });
+                console.log(this.state.articles)
             })
-            .catch(function (error) {
-                // handle error
+            .catch((error) => {
                 console.log('error', error);
             });
-        this.setState({
-            articles: [
-                { title: 'Bruilofts­gast bespuugt beveili­gings­be­amb­te nadat peperdure Lamborghi­ni crasht', id: 'hksafhskjd', date: '20-20-2020', source: 'http://www.nu.nl', body: 'Lorem ipsum' },
-                { title: 'Een afscheid zoals Raffie wilde: ‘Voetbal stelt geen reet voor’', id: 'kashfkjshdj', date: '20-20-2020', source: 'http://www.nu.nl', body: 'Lorem ipsum' },
-                { title: 'NPO 3 scoort pannen van het dak met Stanley H. en Zondag met Lubach', id: 'ehwrjkwnkj', date: '20-20-2020', source: 'http://www.nu.nl', body: 'Lorem ipsum' },
-                { title: 'Angstaanja­gen­de vondst in container langs de A12', id: 'lijaoiwjdlka', date: '20-20-2020', source: 'http://www.nu.nl', body: 'Lorem ipsum' },
-                { title: 'Spanning rond wedstrijd Frank­rijk-Tur­kije: ‘Politieke signalen verboden’', id: 'oijnakdjkwa', date: '20-20-2020', source: 'http://www.nu.nl', body: 'Lorem ipsum' }
-            ]
-        });
     }
 
     updateArticles(direction) {
@@ -58,13 +65,16 @@ class SwipeTest extends React.Component {
         // Setup popup
         this.setState({
             infoScreenTitle: this.state.articles[0].title,
-            infoScreenDate: this.state.articles[0].date,
-            infoScreenSource: this.state.articles[0].source,
-            infoScreenBody: this.state.articles[0].body
+            infoScreenDate: this.state.articles[0].timestamp,
+            infoScreenSource: this.state.articles[0].url,
+            infoScreenBody: this.state.articles[0].description
         }, () => {
             this.toggleInfoScreen(true);
             direction ? currentCard.addEventListener('transitionend', () => this.nextArticle()) : this.nextArticle();
         });
+
+        // Add article to array
+        this.fetchArticle();
     }
 
     nextArticle() {
@@ -96,8 +106,8 @@ class SwipeTest extends React.Component {
                                 <SwipeCard
                                     disabled={disabled}
                                     title={item.title}
-                                    key={item.id}
-                                    id={item.id}
+                                    key={item.primary_key}
+                                    id={item.primary_key}
                                     swipeLeft={() => { this.updateArticles(); }}
                                     swipeRight={() => { this.updateArticles(); }}>
                                     {item.id}
