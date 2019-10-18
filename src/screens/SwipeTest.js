@@ -30,7 +30,7 @@ class SwipeTest extends React.Component {
     componentDidMount() {
         this.fetchArticle();
 
-        if (!getCookie()) setCookie('MARK');
+        if (!getCookie()) return this.props.history.push('/login');
         const userCookie = getCookie().split('|');
         this.setState({ userCode: userCookie[1] });
 
