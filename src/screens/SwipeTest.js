@@ -4,7 +4,9 @@ import SwipeCard from '../components/SwipeCard';
 import Button from '../components/Button';
 import Header from '../components/Header';
 import InfoScreen from '../components/InfoScreen';
-// import Axios from 'axios';
+import Axios from 'axios';
+import { SWIPER_API } from '../constants';
+import { getCookie, setCookie } from '../utilities/Cookie';
 
 class SwipeTest extends React.Component {
     constructor(props) {
@@ -12,6 +14,7 @@ class SwipeTest extends React.Component {
 
         this.state = ({
             articles: [],
+            userCode: '',
             infoScreen: false,
             infoScreenTitle: '',
             infoScreenDate: '',
@@ -25,59 +28,90 @@ class SwipeTest extends React.Component {
     }
 
     componentDidMount() {
-        this.fetchArticles();
+        this.fetchArticle();
+
+        if (!getCookie()) setCookie('MARK');
+        const userCookie = getCookie().split('|');
+        this.setState({ userCode: userCookie[1] });
+
+        //Initialize first five articles
+        const initialArticles = 5;
+        for (let i = 0; i < (initialArticles - 1); i++) {
+            this.fetchArticle();
+        }
     }
 
-    fetchArticles() {
-        // axios.get('/user?ID=12345')
-        //     .then(function (response) {
-        //         // handle success
-        //         console.log(response);
-        //     })
-        //     .catch(function (error) {
-        //         // handle error
-        //         console.log(error);
-        //     });
-        this.setState({
-            articles: [
-                { title: 'Bruilofts­gast bespuugt beveili­gings­be­amb­te nadat peperdure Lamborghi­ni crasht', id: 'hksafhskjd', date: '20-20-2020', source: 'http://www.nu.nl', body: 'Lorem ipsum' },
-                { title: 'Een afscheid zoals Raffie wilde: ‘Voetbal stelt geen reet voor’', id: 'kashfkjshdj', date: '20-20-2020', source: 'http://www.nu.nl', body: 'Lorem ipsum' },
-                { title: 'NPO 3 scoort pannen van het dak met Stanley H. en Zondag met Lubach', id: 'ehwrjkwnkj', date: '20-20-2020', source: 'http://www.nu.nl', body: 'Lorem ipsum' },
-                { title: 'Angstaanja­gen­de vondst in container langs de A12', id: 'lijaoiwjdlka', date: '20-20-2020', source: 'http://www.nu.nl', body: 'Lorem ipsum' },
-                { title: 'Spanning rond wedstrijd Frank­rijk-Tur­kije: ‘Politieke signalen verboden’', id: 'oijnakdjkwa', date: '20-20-2020', source: 'http://www.nu.nl', body: 'Lorem ipsum' }
-            ]
-        });
+    fetchArticle() {
+        let articleArray = this.state.articles;
+
+        Axios({
+            method: 'POST',
+            url: SWIPER_API + '/title/',
+            headers: { 'Content-Type': 'application/json' },
+            data: {
+                "id": "kjkjlka2e232"
+            }
+        })
+            .then((response) => {
+                // handle success
+                articleArray.push(response.data[0]);
+                this.setState({ articles: articleArray });
+            })
+            .catch((error) => {
+                console.log('error', error);
+            });
     }
 
-    updateArticles(direction) {
+    updateArticles(button, direction) {
         // If function was triggered by buttons
         const currentCard = document.querySelector('#' + this.state.articles[0].id);
-        if(direction) currentCard.style[direction] = '-200vw';
-        
+        if (button) currentCard.style[direction] = '-200vw';
+
         // Setup popup
         this.setState({
             infoScreenTitle: this.state.articles[0].title,
-            infoScreenDate: this.state.articles[0].date,
-            infoScreenSource: this.state.articles[0].source,
-            infoScreenBody: this.state.articles[0].body
+            infoScreenDate: this.state.articles[0].timestamp,
+            infoScreenSource: this.state.articles[0].url,
+            infoScreenBody: this.state.articles[0].description
         }, () => {
             this.toggleInfoScreen(true);
-            direction ? currentCard.addEventListener('transitionend', () => this.nextArticle()) : this.nextArticle();
+            if (button) {
+                currentCard.addEventListener('transitionend', () => this.nextArticle(this.state.articles[0].primary_key, direction))
+            } else {
+                this.nextArticle(this.state.articles[0].primary_key, direction);
+            }
         });
+
+        // Add article to array
+        this.fetchArticle();
     }
 
-    nextArticle(){
+    nextArticle(primaryKey, postDirection) {
         let oldArray = this.state.articles;
+
+        const direction = (postDirection === 'left') ? 0 : 1;
+
+        Axios({
+            method: 'POST',
+            url: SWIPER_API + '/swipe/',
+            headers: { 'Content-Type': 'application/json' },
+            data: {
+                "userId": this.state.userCode,
+                "primaryKey": primaryKey,
+                "clickbait": direction
+            }
+        });
+
         oldArray.shift();
         this.setState({ articles: oldArray });
     }
 
-    toggleInfoScreen(boolean){
+    toggleInfoScreen(boolean) {
         this.setState(
             {
                 infoScreen: boolean
             }, () => {
-                if(!boolean) document.documentElement.classList.remove('has--modal');
+                if (!boolean) document.documentElement.classList.remove('has--modal');
             });
     }
 
@@ -95,10 +129,10 @@ class SwipeTest extends React.Component {
                                 <SwipeCard
                                     disabled={disabled}
                                     title={item.title}
-                                    key={item.id}
-                                    id={item.id}
-                                    swipeLeft={() => { this.updateArticles(); }}
-                                    swipeRight={() => { this.updateArticles(); }}>
+                                    key={item.primary_key}
+                                    id={item.primary_key}
+                                    swipeLeft={() => { this.updateArticles(false, 'left'); }}
+                                    swipeRight={() => { this.updateArticles(false, 'right'); }}>
                                     {item.id}
                                 </SwipeCard>
                             );
@@ -111,23 +145,23 @@ class SwipeTest extends React.Component {
                         color='red'
                         large={true}
                         icon='cancel'
-                        onClick={() => { this.updateArticles('left') }} />
+                        onClick={() => { this.updateArticles(true, 'left') }} />
                     <Button
                         color='green'
                         large={true}
                         icon='ok'
-                        onClick={() => { this.updateArticles('right') }} />
+                        onClick={() => { this.updateArticles(true, 'right') }} />
                 </div>
                 {this.state.infoScreen &&
-                <InfoScreen 
-                    active={false}
-                    title={this.state.infoScreenTitle} 
-                    date={this.state.infoScreenDate} 
-                    source={this.state.infoScreenSource} 
-                    body={this.state.infoScreenBody}
-                    toggleInfoScreen={this.toggleInfoScreen}
-                    buttonIcon={`cancel`} 
-                    buttonText={`Sluiten`}  />
+                    <InfoScreen
+                        active={false}
+                        title={this.state.infoScreenTitle}
+                        date={this.state.infoScreenDate}
+                        source={this.state.infoScreenSource}
+                        body={this.state.infoScreenBody}
+                        toggleInfoScreen={this.toggleInfoScreen}
+                        buttonIcon={`cancel`}
+                        buttonText={`Sluiten`} />
                 }
             </div>
         );
