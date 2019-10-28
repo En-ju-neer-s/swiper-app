@@ -28,17 +28,18 @@ class SwipeTest extends React.Component {
     }
 
     componentDidMount() {
-        this.fetchArticle();
-
         if (!getCookie()) return this.props.history.push('/login');
         const userCookie = getCookie().split('|');
-        this.setState({ userCode: userCookie[1] });
-
-        //Initialize first five articles
-        const initialArticles = 5;
-        for (let i = 0; i < (initialArticles - 1); i++) {
-            this.fetchArticle();
-        }
+        this.setState(
+            {
+                userCode: userCookie[1]
+            }, () => {
+                //Initialize first five articles
+                const initialArticles = 5;
+                for (let i = 0; i < (initialArticles - 1); i++) {
+                    this.fetchArticle();
+                }
+            });
     }
 
     fetchArticle() {
@@ -49,7 +50,7 @@ class SwipeTest extends React.Component {
             url: SWIPER_API + '/title/',
             headers: { 'Content-Type': 'application/json' },
             data: {
-                "id": "kjkjlka2e232"
+                "id": this.state.userCode
             }
         })
             .then((response) => {
@@ -64,7 +65,7 @@ class SwipeTest extends React.Component {
 
     updateArticles(button, direction) {
         // If function was triggered by buttons
-        const currentCard = document.querySelector('#' + this.state.articles[0].id);
+        const currentCard = document.getElementById(this.state.articles[0].primary_key);
         if (button) currentCard.style[direction] = '-200vw';
 
         // Setup popup
