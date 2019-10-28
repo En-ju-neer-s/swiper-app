@@ -13,7 +13,6 @@ export const SwipeCard = (props) => {
                 transition: { duration: 0.6 },
             });
             setTimeout(() => {
-                console.log(true);
                 props.swipeRight();
             }, 600);
         } else if (i.offset.x <= -250) {
@@ -22,7 +21,6 @@ export const SwipeCard = (props) => {
                 transition: { duration: 0.6 },
             });
             setTimeout(() => {
-                console.log(false);
                 props.swipeLeft();
             }, 600);
         }

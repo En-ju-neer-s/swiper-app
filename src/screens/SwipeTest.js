@@ -6,7 +6,7 @@ import Header from '../components/Header';
 import InfoScreen from '../components/InfoScreen';
 import Axios from 'axios';
 import { SWIPER_API } from '../constants';
-import { getCookie, setCookie } from '../utilities/Cookie';
+import { getCookie } from '../utilities/Cookie';
 
 class SwipeTest extends React.Component {
     constructor(props) {
