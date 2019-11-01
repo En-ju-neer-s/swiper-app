@@ -47,7 +47,7 @@ export const SwipeCard = (props) => {
             animate={controls}
             style={{ x, backgroundColor, rotate }}
         >
-            <h1>{props.title}</h1>
+            <h1 className="swipe-card__heading">{props.title}</h1>
         </motion.div>
     )
 }

@@ -39,7 +39,7 @@ class Header extends React.Component {
                 {this.state.clickbaitInfo &&
                     <InfoScreen
                         active={false}
-                        title='Clickbait title'
+                        title='Wat is clickbait?'
                         body='Clickbait Body'
                         toggleInfoScreen={this.toggleClickbaitInfo}
                         buttonIcon={`cancel`}
