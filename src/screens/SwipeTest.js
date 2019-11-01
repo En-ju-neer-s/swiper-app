@@ -42,6 +42,24 @@ class SwipeTest extends React.Component {
             });
     }
 
+    convertTime(data) {
+        if(data.includes("T")){
+            return data.split('T')[0];
+        }
+
+        return data;
+    }
+
+    encode(data) {
+        return window.btoa(data);
+    }
+
+    decode(data) {
+        const parser = new DOMParser();
+        const decodedString = parser.parseFromString(`<!doctype html><body>${window.atob(data)}`, 'text/html').body.textContent;
+        return decodedString;
+    }
+
     fetchArticle() {
         let articleArray = this.state.articles;
 
@@ -71,7 +89,7 @@ class SwipeTest extends React.Component {
         // Setup popup
         this.setState({
             infoScreenTitle: this.state.articles[0].title,
-            infoScreenDate: this.state.articles[0].timestamp,
+            infoScreenDate: this.convertTime(this.state.articles[0].timestamp),
             infoScreenSource: this.state.articles[0].url,
             infoScreenBody: this.state.articles[0].description
         }, () => {
@@ -129,7 +147,7 @@ class SwipeTest extends React.Component {
                             return (
                                 <SwipeCard
                                     disabled={disabled}
-                                    title={item.title}
+                                    title={this.decode(item.title)}
                                     key={item.primary_key}
                                     id={item.primary_key}
                                     swipeLeft={() => { this.updateArticles(false, 'left'); }}
@@ -156,10 +174,10 @@ class SwipeTest extends React.Component {
                 {this.state.infoScreen &&
                     <InfoScreen
                         active={false}
-                        title={this.state.infoScreenTitle}
+                        title={this.decode(this.state.infoScreenTitle)}
                         date={this.state.infoScreenDate}
                         source={this.state.infoScreenSource}
-                        body={this.state.infoScreenBody}
+                        body={this.decode(this.state.infoScreenBody)}
                         toggleInfoScreen={this.toggleInfoScreen}
                         buttonIcon={`cancel`}
                         buttonText={`Sluiten`} />
