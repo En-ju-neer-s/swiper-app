@@ -1,6 +1,8 @@
 import React from 'react';
 import Button from '../components/Button';
 import { getCookie, setCookie } from '../utilities/Cookie';
+import Axios from 'axios';
+import { SWIPER_API } from '../constants';
 
 class Login extends React.Component {
     constructor(props) {
@@ -13,6 +15,17 @@ class Login extends React.Component {
         const username = document.querySelector('[js-login-input]');
         if(username.value) {
             setCookie(username.value);
+
+            Axios({
+                method: 'POST',
+                url: SWIPER_API + '/user/',
+                headers: { 'Content-Type': 'application/json' },
+                data: {
+                    "id": setCookie(username.value),
+                    "username": username.value
+                }
+            });
+
             this.props.history.push('/');
         }
     }

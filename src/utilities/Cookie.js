@@ -12,12 +12,14 @@ export function setCookie(username) {
     let usercode = `${username.split(' ').join('')}`;
     usercode = `${usercode.substring(0, 10)}${date.getTime()}`;
     document.cookie = `${COOKIE_NAME}=${username}|${usercode}; expires=Thu, 31 Dec ${nextYear} 12:00:00 UTC`;
+    return usercode;
 }
 
-export function createAccount(username) {
-    const date = new Date();
-    let usercode = `${username.split(' ').join('')}`;
-    usercode = `${usercode.substring(0, 10)}${date.getTime()}`;
+// Remove when redundant!
+// export function createAccount(username) {
+//     const date = new Date();
+//     let usercode = `${username.split(' ').join('')}`;
+//     usercode = `${usercode.substring(0, 10)}${date.getTime()}`;
 
-    return `${username}|${usercode}`;
-}
+//     return `${username}|${usercode}`;
+// }

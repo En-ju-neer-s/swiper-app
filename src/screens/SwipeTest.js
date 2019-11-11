@@ -43,9 +43,9 @@ class SwipeTest extends React.Component {
     }
 
     convertTime(data) {
-        if(data.includes("T")){
-            return data.split('T')[0];
-        }
+        // if(data.includes("T")){
+        //     return data.split('T')[0];
+        // }
 
         return data;
     }
