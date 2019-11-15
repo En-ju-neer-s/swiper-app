@@ -1,30 +1,35 @@
 [
     {
-        "primary_key": "1", 
+        "primary_key": "1",
+        "clickbait": "ja", 
         "url": "https://www.robintreur.nl", 
         "title": "SXMgTWFyayBSdXR0ZSBob21vPw==", 
         "description": "RGl0IHdhcyBlZW4gY2xpY2tiYWl0IHRlc3Qu"
     },
     {
         "primary_key": "2", 
+        "clickbait": "nee",
         "url": "https://www.robintreur.nl", 
         "title": "RGl0IGlzIGdlZW4gY2xpY2tiYWl0", 
         "description": "RGl0IHdhcyBlZW4gY2xpY2tiYWl0IHRlc3Qu"
     },
     {
-        "primary_key": "3", 
+        "primary_key": "3",
+        "clickbait": "ja", 
         "url": "https://www.robintreur.nl", 
         "title": "RGl0IGlzIHdhYXJvbSBtZW5zZW4gZGVua2VuIGRhdCBNYXhpbWEgendhbmdlciBpcy4=", 
         "description": "RGl0IHdhcyBlZW4gY2xpY2tiYWl0IHRlc3Qu"
     },
     {
-        "primary_key": "4", 
+        "primary_key": "4",
+        "clickbait": "nee", 
         "url": "https://www.robintreur.nl", 
         "title": "RGl0IGlzIGdlZW4gY2xpY2tiYWl0", 
         "description": "RGl0IHdhcyBlZW4gY2xpY2tiYWl0IHRlc3Qu"
     },
     {
-        "primary_key": "5", 
+        "primary_key": "5",
+        "clickbait": "ja",
         "url": "https://www.robintreur.nl", 
         "title": "V2F0IFRydW1wIG51IGdlZGFhbiBoZWVmdCBnZWxvb2YgamUgbmlldC4=", 
         "description": "RGl0IHdhcyBlZW4gY2xpY2tiYWl0IHRlc3Qu"

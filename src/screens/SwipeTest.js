@@ -120,10 +120,10 @@ class SwipeTest extends React.Component {
         });
     }
 
-    updateArticles(button, direction) {
+    updateArticles(button, answer) {
         // If function was triggered by buttons
         const currentCard = document.getElementById(this.state.articles[0].primary_key);
-        if (button) currentCard.style[direction] = '-200vw';
+        if (button) currentCard.style[answer] = '-200vw';
 
         // Setup popup
         this.setState({
@@ -134,10 +134,13 @@ class SwipeTest extends React.Component {
             articleCount: this.state.articleCount += 1
         }, () => {
             this.toggleInfoScreen(true);
+
+            const clickbait = this.state.articles[0].clickbait;
+
             if (button) {
-                currentCard.addEventListener('transitionend', () => this.nextArticle(this.state.articles[0].primary_key, direction))
+                currentCard.addEventListener('transitionend', () => this.nextArticle(this.state.articles[0].primary_key, answer, clickbait))
             } else {
-                this.nextArticle(this.state.articles[0].primary_key, direction);
+                this.nextArticle(this.state.articles[0].primary_key, answer, clickbait);
             }
 
             if(this.state.articleCount % 5 === 0){
@@ -148,21 +151,33 @@ class SwipeTest extends React.Component {
         });
     }
 
-    nextArticle(primaryKey, postDirection) {
+    nextArticle(primaryKey, postAnswer, clickbait) {
         let oldArray = this.state.articles;
 
-        const direction = (postDirection === 'left') ? 0 : 1;
+        const answer = (postAnswer === 'nee') ? 0 : 1;
 
-        Axios({
-            method: 'POST',
-            url: SWIPER_API + '/swipe/',
-            headers: { 'Content-Type': 'application/json' },
-            data: {
-                "userId": this.state.userCode,
-                "primaryKey": primaryKey,
-                "clickbait": direction
-            }
-        });
+        if(clickbait && postAnswer !== clickbait) {
+            Axios({
+                method: 'PATCH',
+                url: SWIPER_API + '/strike/',
+                headers: { 'Content-Type': 'application/json' },
+                data: {
+                    "userId": this.state.userCode,
+                }
+            });
+        } else if (!clickbait) {
+            Axios({
+                method: 'POST',
+                url: SWIPER_API + '/swipe/',
+                headers: { 'Content-Type': 'application/json' },
+                data: {
+                    "userId": this.state.userCode,
+                    "primaryKey": primaryKey,
+                    "clickbait": answer
+                }
+            });
+        }
+        
 
         oldArray.shift();
         this.setState({ articles: oldArray });
@@ -193,8 +208,8 @@ class SwipeTest extends React.Component {
                                     title={this.decode(item.title)}
                                     key={item.primary_key}
                                     id={item.primary_key}
-                                    swipeLeft={() => { this.updateArticles(false, 'left'); }}
-                                    swipeRight={() => { this.updateArticles(false, 'right'); }}>
+                                    swipeLeft={() => { this.updateArticles(false, 'nee'); }}
+                                    swipeRight={() => { this.updateArticles(false, 'ja'); }}>
                                     {item.id}
                                 </SwipeCard>
                             );
@@ -207,12 +222,12 @@ class SwipeTest extends React.Component {
                         color='red'
                         large={true}
                         icon='cancel'
-                        onClick={() => { this.updateArticles(true, 'left') }} />
+                        onClick={() => { this.updateArticles(true, 'nee') }} />
                     <Button
                         color='green'
                         large={true}
                         icon='ok'
-                        onClick={() => { this.updateArticles(true, 'right') }} />
+                        onClick={() => { this.updateArticles(true, 'ja') }} />
                 </div>
                 {this.state.infoScreen &&
                     <InfoScreen
