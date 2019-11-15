@@ -32,11 +32,11 @@ class SwipeTest extends React.Component {
         const userCookie = getCookie().split('|');
         this.setState(
             {
-                userCode: userCookie[1]
+                userCode: userCookie[1],
+                articleCount: 4
             }, () => {
-                //Initialize first five articles
-                const initialArticles = 5;
-                for (let i = 0; i < (initialArticles - 1); i++) {
+                const initialArticles = 4;
+                for (let i = 0; i < initialArticles; i++) {
                     this.fetchArticle();
                 }
             });
@@ -71,14 +71,53 @@ class SwipeTest extends React.Component {
                 "id": this.state.userCode
             }
         })
-            .then((response) => {
-                // handle success
-                articleArray.push(response.data[0]);
-                this.setState({ articles: articleArray });
-            })
-            .catch((error) => {
-                console.log('error', error);
-            });
+        .then((response) => {
+            // handle success
+            articleArray.push(response.data[0]);
+            this.setState({ articles: articleArray });
+        })
+        .catch((error) => {
+            console.log('error', error);
+        });
+    }
+
+    fetchTestArticle() {
+        let articleArray = this.state.articles;
+
+        Axios({
+            method: 'POST',
+            url: SWIPER_API + '/title/',
+            headers: { 'Content-Type': 'application/json' },
+            data: {
+                "id": this.state.userCode
+            }
+        })
+        .then((response) => {
+            // handle success
+            articleArray.push(response.data[0]);
+            this.setState({ articles: articleArray });
+        })
+        .catch((error) => {
+            console.log('error', error);
+        });
+    }
+
+    fetchTestArticle() {
+        let articleArray = this.state.articles;
+
+        Axios({
+            method: 'GET',
+            url: './data/test.json',
+        })
+        .then((response) => {
+            // handle success
+            const data = response.data[(this.state.articleCount / 5) - 1];
+            articleArray.push(data);
+            this.setState({ articles: articleArray });
+        })
+        .catch((error) => {
+            console.log('error', error);
+        });
     }
 
     updateArticles(button, direction) {
@@ -88,10 +127,11 @@ class SwipeTest extends React.Component {
 
         // Setup popup
         this.setState({
-            infoScreenTitle: this.state.articles[0].title,
+            infoScreenTitle: `${this.state.articles[0].title}`,
             infoScreenDate: this.convertTime(this.state.articles[0].timestamp),
             infoScreenSource: this.state.articles[0].url,
-            infoScreenBody: this.state.articles[0].description
+            infoScreenBody: this.state.articles[0].description,
+            articleCount: this.state.articleCount += 1
         }, () => {
             this.toggleInfoScreen(true);
             if (button) {
@@ -99,10 +139,13 @@ class SwipeTest extends React.Component {
             } else {
                 this.nextArticle(this.state.articles[0].primary_key, direction);
             }
-        });
 
-        // Add article to array
-        this.fetchArticle();
+            if(this.state.articleCount % 5 === 0){
+                this.fetchTestArticle();
+            } else {
+                this.fetchArticle();
+            }
+        });
     }
 
     nextArticle(primaryKey, postDirection) {
