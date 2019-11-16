@@ -32,11 +32,11 @@ class SwipeTest extends React.Component {
         const userCookie = getCookie().split('|');
         this.setState(
             {
-                userCode: userCookie[1]
+                userCode: userCookie[1],
+                articleCount: 4
             }, () => {
-                //Initialize first five articles
-                const initialArticles = 5;
-                for (let i = 0; i < (initialArticles - 1); i++) {
+                const initialArticles = 4;
+                for (let i = 0; i < initialArticles; i++) {
                     this.fetchArticle();
                 }
             });
@@ -71,55 +71,113 @@ class SwipeTest extends React.Component {
                 "id": this.state.userCode
             }
         })
-            .then((response) => {
-                // handle success
-                articleArray.push(response.data[0]);
-                this.setState({ articles: articleArray });
-            })
-            .catch((error) => {
-                console.log('error', error);
-            });
-    }
-
-    updateArticles(button, direction) {
-        // If function was triggered by buttons
-        const currentCard = document.getElementById(this.state.articles[0].primary_key);
-        if (button) currentCard.style[direction] = '-200vw';
-
-        // Setup popup
-        this.setState({
-            infoScreenTitle: this.state.articles[0].title,
-            infoScreenDate: this.convertTime(this.state.articles[0].timestamp),
-            infoScreenSource: this.state.articles[0].url,
-            infoScreenBody: this.state.articles[0].description
-        }, () => {
-            this.toggleInfoScreen(true);
-            if (button) {
-                currentCard.addEventListener('transitionend', () => this.nextArticle(this.state.articles[0].primary_key, direction))
-            } else {
-                this.nextArticle(this.state.articles[0].primary_key, direction);
-            }
+        .then((response) => {
+            // handle success
+            articleArray.push(response.data[0]);
+            this.setState({ articles: articleArray });
+        })
+        .catch((error) => {
+            console.log('error', error);
         });
-
-        // Add article to array
-        this.fetchArticle();
     }
 
-    nextArticle(primaryKey, postDirection) {
-        let oldArray = this.state.articles;
-
-        const direction = (postDirection === 'left') ? 0 : 1;
+    fetchTestArticle() {
+        let articleArray = this.state.articles;
 
         Axios({
             method: 'POST',
-            url: SWIPER_API + '/swipe/',
+            url: SWIPER_API + '/title/',
             headers: { 'Content-Type': 'application/json' },
             data: {
-                "userId": this.state.userCode,
-                "primaryKey": primaryKey,
-                "clickbait": direction
+                "id": this.state.userCode
+            }
+        })
+        .then((response) => {
+            // handle success
+            articleArray.push(response.data[0]);
+            this.setState({ articles: articleArray });
+        })
+        .catch((error) => {
+            console.log('error', error);
+        });
+    }
+
+    fetchTestArticle() {
+        let articleArray = this.state.articles;
+
+        Axios({
+            method: 'GET',
+            url: './data/test.json',
+        })
+        .then((response) => {
+            // handle success
+            const data = response.data[(this.state.articleCount / 5) - 1];
+            articleArray.push(data);
+            this.setState({ articles: articleArray });
+        })
+        .catch((error) => {
+            console.log('error', error);
+        });
+    }
+
+    updateArticles(button, answer) {
+        // If function was triggered by buttons
+        const currentCard = document.getElementById(this.state.articles[0].primary_key);
+        if (button) currentCard.style[answer] = '-200vw';
+
+        // Setup popup
+        this.setState({
+            infoScreenTitle: `${this.state.articles[0].title}`,
+            infoScreenDate: this.convertTime(this.state.articles[0].timestamp),
+            infoScreenSource: this.state.articles[0].url,
+            infoScreenBody: this.state.articles[0].description,
+            articleCount: this.state.articleCount += 1
+        }, () => {
+            this.toggleInfoScreen(true);
+
+            const clickbait = this.state.articles[0].clickbait;
+
+            if (button) {
+                currentCard.addEventListener('transitionend', () => this.nextArticle(this.state.articles[0].primary_key, answer, clickbait))
+            } else {
+                this.nextArticle(this.state.articles[0].primary_key, answer, clickbait);
+            }
+
+            if(this.state.articleCount % 5 === 0){
+                this.fetchTestArticle();
+            } else {
+                this.fetchArticle();
             }
         });
+    }
+
+    nextArticle(primaryKey, postAnswer, clickbait) {
+        let oldArray = this.state.articles;
+
+        const answer = (postAnswer === 'nee') ? 0 : 1;
+
+        if(clickbait && postAnswer !== clickbait) {
+            Axios({
+                method: 'PATCH',
+                url: SWIPER_API + '/strike/',
+                headers: { 'Content-Type': 'application/json' },
+                data: {
+                    "userId": this.state.userCode,
+                }
+            });
+        } else if (!clickbait) {
+            Axios({
+                method: 'POST',
+                url: SWIPER_API + '/swipe/',
+                headers: { 'Content-Type': 'application/json' },
+                data: {
+                    "userId": this.state.userCode,
+                    "primaryKey": primaryKey,
+                    "clickbait": answer
+                }
+            });
+        }
+        
 
         oldArray.shift();
         this.setState({ articles: oldArray });
@@ -150,8 +208,8 @@ class SwipeTest extends React.Component {
                                     title={this.decode(item.title)}
                                     key={item.primary_key}
                                     id={item.primary_key}
-                                    swipeLeft={() => { this.updateArticles(false, 'left'); }}
-                                    swipeRight={() => { this.updateArticles(false, 'right'); }}>
+                                    swipeLeft={() => { this.updateArticles(false, 'nee'); }}
+                                    swipeRight={() => { this.updateArticles(false, 'ja'); }}>
                                     {item.id}
                                 </SwipeCard>
                             );
