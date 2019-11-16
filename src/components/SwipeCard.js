@@ -56,7 +56,9 @@ export const SwipeCard = (props) => {
         "#26BFBF"
     ]);
     const rotate = useTransform(x, xInput, [-45, 0, 45]);
-
+    
+    const opacityJa = useTransform(x, xInput, [0, 1, 1]);
+    const opacityNee = useTransform(x, xInput, [1, 1, 0]);
     const widthJa = useTransform(x, xInput, ["0%", "50%", "100%"]);
     const widthNee = useTransform(x, xInput, ["100%", "50%", "0%"]);
 
@@ -80,13 +82,13 @@ export const SwipeCard = (props) => {
                     style={{ width: widthNee }}
                     className="swipe-card__button swipe-card__button--nee"
                     onClick={() => { buttonClick('no') }}>
-                    <span>Nee</span>
+                    <motion.span style={{ opacity: opacityNee }}>Nee</motion.span>
                 </motion.div>
                 <motion.div
                     style={{ width: widthJa }}
                     className="swipe-card__button swipe-card__button--ja"
                     onClick={() => { buttonClick('yes') }}>
-                    <span>Ja</span>
+                    <motion.span style={{ opacity: opacityJa }}>Ja</motion.span>
                 </motion.div>
             </div>
         </motion.div>
