@@ -1,18 +1,23 @@
 .c-swipe-card {
+    $self: &;
+    flex-shrink: 0;
+    flex-grow: 0;
     width: 250px;
-    min-height: 250px;
+    max-height: 250px;
     font-size: 15px;
     border-radius: $border-radius;
     box-shadow: $shadow;
+    margin: auto;
     position: absolute;
-    top: 0;
+    top: -50px; left: 0; bottom: 0; right: 0;
     z-index: 9;
     opacity: 0;
     box-sizing: border-box;
-    padding: 10px 30px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
     flex-direction: column;
+    overflow: hidden;
     transition:
         top .3s ease,
         left .3s ease,
@@ -24,15 +29,18 @@
     
     &:nth-child(1) {
         position: absolute;
-        top: 25px;
-        left: 0;
-        right: 0;
-        margin-left: auto;
-        margin-right: auto;
-        margin-bottom: 80px;
+        top: 0; left: 0; bottom: 0; right: 0;
+        margin: auto;
+        // margin-bottom: 80px;
         font-size: 18px;
         width: 300px;
         z-index: 10;
+
+        .swipe-card__heading {
+            h1 {
+                font-size: 24px;
+            }
+        }
     }
 
     &:nth-child(2){
@@ -46,6 +54,70 @@
 }
 
 .swipe-card__heading {
+    // width: 240px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-overflow: ellipsis;
     overflow: hidden;
+    padding: 10px 30px;
+    h1 {
+        font-size: 19px;
+        transition: font-size .3s ease;
+    }
+}
+
+.swipe-card__buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px $color-gray-light solid;
+    width: 100%;
+    height: 60px;
+}
+
+.swipe-card__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-weight: 700;
+    overflow: hidden;
+    height: 60%;
+    flex-shrink: 0;
+    position: relative;
+
+    span {
+        position: relative;
+        &::before {
+            content: "";
+            width: 15px;
+            height: 25px;
+            background-image: url("/images/arrow-black.svg");
+            background-repeat: no-repeat;
+            background-position: center;
+            position: absolute;
+            transform: rotate(180deg);
+            left: -35px;
+        }
+    }
+
+    &:nth-child(2){
+        border-left: 1px $color-gray-light solid;
+        span {
+            &::before {
+                transform: rotate(0);
+                left: 45px;
+            }
+        }
+    }
+}
+
+.swipe-card__button--nee {
+    width: 50%;
+}
+
+.swipe-card__button--ja {
+    width: 50%;
 }
