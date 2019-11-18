@@ -71,35 +71,14 @@ class SwipeTest extends React.Component {
                 "id": this.state.userCode
             }
         })
-        .then((response) => {
-            // handle success
-            articleArray.push(response.data[0]);
-            this.setState({ articles: articleArray });
-        })
-        .catch((error) => {
-            console.log('error', error);
-        });
-    }
-
-    fetchTestArticle() {
-        let articleArray = this.state.articles;
-
-        Axios({
-            method: 'POST',
-            url: SWIPER_API + '/title/',
-            headers: { 'Content-Type': 'application/json' },
-            data: {
-                "id": this.state.userCode
-            }
-        })
-        .then((response) => {
-            // handle success
-            articleArray.push(response.data[0]);
-            this.setState({ articles: articleArray });
-        })
-        .catch((error) => {
-            console.log('error', error);
-        });
+            .then((response) => {
+                // handle success
+                articleArray.push(response.data[0]);
+                this.setState({ articles: articleArray });
+            })
+            .catch((error) => {
+                console.log('error', error);
+            });
     }
 
     fetchTestArticle() {
@@ -109,15 +88,33 @@ class SwipeTest extends React.Component {
             method: 'GET',
             url: './data/test.json',
         })
-        .then((response) => {
-            // handle success
-            const data = response.data[(this.state.articleCount / 5) - 1];
-            articleArray.push(data);
-            this.setState({ articles: articleArray });
+            .then((response) => {
+                // handle success
+                const data = response.data[(this.state.articleCount / 5) - 1];
+                articleArray.push(data);
+                this.setState({ articles: articleArray });
+            })
+            .catch((error) => {
+                console.log('error', error);
+            });
+    }
+
+    fetchIntro() {
+        let articleArray = this.state.articles;
+
+        Axios({
+            method: 'GET',
+            url: './data/intro.json',
         })
-        .catch((error) => {
-            console.log('error', error);
-        });
+            .then((response) => {
+                // handle success
+                const data = response.data[(this.state.articleCount / 5) - 1];
+                articleArray.push(data);
+                this.setState({ articles: articleArray });
+            })
+            .catch((error) => {
+                console.log('error', error);
+            });
     }
 
     updateArticles(button, answer) {
@@ -143,7 +140,7 @@ class SwipeTest extends React.Component {
                 this.nextArticle(this.state.articles[0].primary_key, answer, clickbait);
             }
 
-            if(this.state.articleCount % 5 === 0){
+            if (this.state.articleCount % 5 === 0) {
                 this.fetchTestArticle();
             } else {
                 this.fetchArticle();
@@ -156,7 +153,7 @@ class SwipeTest extends React.Component {
 
         const answer = (postAnswer === 'nee') ? 0 : 1;
 
-        if(clickbait && postAnswer !== clickbait) {
+        if (clickbait && postAnswer !== clickbait) {
             Axios({
                 method: 'PATCH',
                 url: SWIPER_API + '/strike/',
@@ -177,7 +174,7 @@ class SwipeTest extends React.Component {
                 }
             });
         }
-        
+
 
         oldArray.shift();
         this.setState({ articles: oldArray });
