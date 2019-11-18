@@ -39,8 +39,12 @@ class Header extends React.Component {
                 {this.state.clickbaitInfo &&
                     <InfoScreen
                         active={false}
-                        title='Wat is clickbait?'
-                        body='Clickbait Body'
+                        title='Wie zijn wij?'
+                        body='Wij van ACED doen onderzoek naar het gebruik van ‘clickbait koppen’ van artikelen die de
+                        grote mediaplatforms gebruiken puur om meer clicks te genereren. Wij zouden graag willen weten
+                        door middel van een spel welke koppen als clickbait worden ervaren. Hier zal u tijdens dit
+                        spel op worden getest. Dit helpt ons om inzicht te krijgen hoe men denkt over de
+                        (verleidelijke) koppen van de diverse mediaplatforms. Of u een krantenkop clickbait is, is volledig iemand zijn mening.'
                         toggleInfoScreen={this.toggleClickbaitInfo}
                         buttonIcon={`cancel`}
                         buttonText={`Sluiten`} />
