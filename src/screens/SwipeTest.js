@@ -217,18 +217,6 @@ class SwipeTest extends React.Component {
                         })
                     }
                 </SwipeDeck>
-                <div className={`swipe-test__buttons ${this.state.articles.length ? '' : 'is--hidden'}`}>
-                    <Button
-                        color='red'
-                        large={true}
-                        icon='cancel'
-                        onClick={() => { this.updateArticles(true, 'nee') }} />
-                    <Button
-                        color='green'
-                        large={true}
-                        icon='ok'
-                        onClick={() => { this.updateArticles(true, 'ja') }} />
-                </div>
                 {this.state.infoScreen &&
                     <InfoScreen
                         active={false}
