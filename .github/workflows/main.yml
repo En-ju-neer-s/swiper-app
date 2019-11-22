@@ -18,13 +18,14 @@ jobs:
     - name: ls -a via ssh
       uses: garygrossgarten/github-action-ssh@release
       with:
-        run: | 
-          ls -a
-          cd test
-          ls -a
+        command: ls -a
         host: ${{ secrets.HOST }}
         username: ubuntu-0925860
         password: ${{ secrets.PASSWORD }}
 #         tryKeyboard: true
 #         passphrase: ${{ secrets.PASSPHRASE }}
 #         privateKey: ${{ secrets.PRIVATE_KEY}}
+    - name: Run on ssh?
+      run: |
+        cd test,
+        ls -a
