@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import SwipeTest from './screens/SwipeTest';
 import Login from './screens/Login';
-//cicd test :)
 
 function App() {
   return (
