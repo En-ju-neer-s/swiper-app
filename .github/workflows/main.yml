@@ -9,12 +9,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Run a one-line script
-      run: echo Hello, world!
-    - name: Run a multi-line script
-      run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
+    - name: npm install
+      run: npm install
+    - name: npm run build
+      run: npm run build
     - name: ls -a via ssh
       uses: garygrossgarten/github-action-ssh@release
       with:
@@ -25,7 +23,3 @@ jobs:
 #         tryKeyboard: true
 #         passphrase: ${{ secrets.PASSPHRASE }}
 #         privateKey: ${{ secrets.PRIVATE_KEY}}
-    - name: Run on ssh?
-      run: |
-        cd test,
-        ls -a
