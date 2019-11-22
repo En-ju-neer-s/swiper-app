@@ -1,6 +1,9 @@
 name: CI
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   build:
@@ -14,25 +17,6 @@ jobs:
         npm install
         npm run build
         ls -a
-#     - name: ls -a via ssh
-#       uses: garygrossgarten/github-action-ssh@release
-#       with:
-#         command: ls -a
-#         host: ${{ secrets.HOST }}
-#         username: ubuntu-0925860
-#         password: ${{ secrets.PASSWORD }}
-#         tryKeyboard: true
-#         passphrase: ${{ secrets.PASSPHRASE }}
-#         privateKey: ${{ secrets.PRIVATE_KEY}}
-#     - name: FTP-Deploy-Action
-#       uses: SamKirkland/FTP-Deploy-Action@2.0.0
-#       env:
-#         FTP_SERVER: ${{ secrets.HOST }}
-#         FTP_USERNAME: githubcicd
-#         FTP_PASSWORD: ${{ secrets.PASSWORD }}
-#         LOCAL_DIR: build
-#         REMOTE_DIR: var/www
-#         ARGS: --delete
     - name: Copy folder content recursively to remote
       uses: garygrossgarten/github-action-scp@release
       with:
