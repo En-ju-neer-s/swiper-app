@@ -37,7 +37,7 @@ jobs:
       uses: garygrossgarten/github-action-scp@release
       with:
         local: build
-        remote: var/www
+        remote: ../../var/www
         host: ${{ secrets.HOST }}
         username: githubcicd
         password: ${{ secrets.PASSWORD }}
