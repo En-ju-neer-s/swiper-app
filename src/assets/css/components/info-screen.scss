@@ -19,6 +19,14 @@
     overflow: hidden;
 }
 
+.info-screen__header {
+    font-weight: 700;
+}
+
+.info-screen__date {
+    padding-top: 10px;
+}
+
 .info-screen--active {
     opacity: 1;
     pointer-events: all;
@@ -39,6 +47,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-direction: column;
+    min-height: 100px;
 }
 
 .info-screen__column {

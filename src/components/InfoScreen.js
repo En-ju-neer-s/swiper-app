@@ -9,6 +9,9 @@ class InfoScreen extends React.Component {
         super(props);
 
         this.InfoScreen = React.createRef();
+        if(this.props.source){
+            this.sourceName = new URL(this.props.source).hostname.replace('www.', '');
+        }
     }
 
     componentDidMount() {
@@ -48,19 +51,19 @@ class InfoScreen extends React.Component {
             <div className="c-info-screen" ref={this.InfoScreen}>
                 <div className="info-screen__inner">
                     <div className="c-loader" js-loader=""></div>
-                    <h2>{title}</h2>
+                    <h2 className="info-screen__header">{title}</h2>
+                    {date &&
+                        <div className="info-screen__date">{date}</div>
+                    }
                     <p>{body}</p>
                 </div>
                 <div className="info-screen__inner info-screen__menu">
-                    <div className="info-screen__column">
-                        {date &&
-                            <span>{date}</span>
-                        }
+                    <div className="info-screen__row">
                         {source &&
-                            <a href={source} target="_blank" className="c-source"><i className="u-icon icon--link"></i> Bron</a>
+    <a href={source} target="_blank" className="c-source"><i className="u-icon icon--link"></i> Bron: {this.sourceName}</a>
                         }
                     </div>
-                    <div className={`info-screen__column`}>
+                    <div className={`info-screen__row`}>
                         <Button
                             color='blue'
                             icon={buttonIcon}
