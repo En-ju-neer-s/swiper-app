@@ -1,0 +1,10 @@
+.c-loader {
+    background-color: $color-blue;
+    position: absolute;
+    transition: ease 300ms;
+    transition-property: width;
+    height: 10px;
+    border-radius: 0 0 15px 0;
+    left: 0;
+    top: 0;
+}

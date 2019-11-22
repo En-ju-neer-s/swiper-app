@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { WEATHER_API_KEY } from '../keys';
-import { WEATHER_URL } from '../constants';
+import { WEATHER_API_KEY } from '../../keys';
+import { WEATHER_URL } from '../../constants';
 
 export const FETCH_WEATHER = 'FETCH_WEATHER';
 

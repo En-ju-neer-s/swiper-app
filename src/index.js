@@ -14,6 +14,10 @@ import reducers from './redux/reducers';
 
 const createStoreWithMiddleware = applyMiddleware(ReduxPromise, logger)(createStore);
 
+// chnge some more lines
+// for cicd test :D
+
+
 ReactDOM.render(
     <Provider store={createStoreWithMiddleware(reducers)}>
         <App />
