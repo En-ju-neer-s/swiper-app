@@ -9,10 +9,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: npm install
-      run: npm install
-    - name: npm run build
-      run: npm run build
+    - name: build project
+      run: |
+        npm install
+        npm run build
+        ls -a
     - name: ls -a via ssh
       uses: garygrossgarten/github-action-ssh@release
       with:
