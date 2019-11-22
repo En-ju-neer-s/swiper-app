@@ -1,4 +1,5 @@
 import React from 'react';
+import * as moment from 'moment';
 import SwipeDeck from '../components/SwipeDeck';
 import SwipeCard from '../components/SwipeCard';
 import Button from '../components/Button';
@@ -224,6 +225,14 @@ class SwipeTest extends React.Component {
             });
     }
 
+    stampToDate(data) {
+        if(data) {
+            console.log(data);
+            if([...data].length === 13) data = parseInt(data);
+            return moment(data).format('DD-MM-YYYY');
+        }
+    }
+
     render() {
         const { articles } = this.state;
 
@@ -253,7 +262,7 @@ class SwipeTest extends React.Component {
                     <InfoScreen
                         active={false}
                         title={this.decode(this.state.infoScreenTitle)}
-                        date={this.state.infoScreenDate}
+                        date={this.stampToDate(this.state.infoScreenDate)}
                         source={this.state.infoScreenSource}
                         body={this.decode(this.state.infoScreenBody)}
                         toggleInfoScreen={this.toggleInfoScreen}
