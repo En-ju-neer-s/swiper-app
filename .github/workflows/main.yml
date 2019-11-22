@@ -18,8 +18,8 @@ jobs:
     - name: ls -a via ssh
       uses: garygrossgarten/github-action-ssh@release
       with:
-        command: ls -a
-        run: |
+        run: | 
+          ls -a
           cd test
           ls -a
         host: ${{ secrets.HOST }}
