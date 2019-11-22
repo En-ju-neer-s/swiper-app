@@ -19,9 +19,12 @@ jobs:
       uses: garygrossgarten/github-action-ssh@release
       with:
         command: ls -a
+        run: |
+          cd test
+          ls -a
         host: ${{ secrets.HOST }}
         username: ubuntu-0925860
         password: ${{ secrets.PASSWORD }}
-        tryKeyboard: true
+#         tryKeyboard: true
 #         passphrase: ${{ secrets.PASSPHRASE }}
 #         privateKey: ${{ secrets.PRIVATE_KEY}}
