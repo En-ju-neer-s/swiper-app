@@ -32,7 +32,7 @@ class Header extends React.Component {
             <div>
                 <div className={`c-header`}>
                     <div className={'header__inner'}>
-                        <h2>{title}</h2>
+                        <h2 className='header__heading'>{title}</h2>
                         <i className='header__info u-icon icon--info-circled' js-toggle-info=''></i>
                     </div>
                 </div>

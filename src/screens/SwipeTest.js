@@ -36,19 +36,12 @@ class SwipeTest extends React.Component {
                 userCode: userCookie[1],
                 articleCount: 4
             }, () => {
+                this.fetchWelcomeArticles();
                 const initialArticles = 4;
                 for (let i = 0; i < initialArticles; i++) {
                     this.fetchArticle();
                 }
             });
-    }
-
-    convertTime(data) {
-        // if(data.includes("T")){
-        //     return data.split('T')[0];
-        // }
-
-        return data;
     }
 
     encode(data) {
@@ -89,6 +82,8 @@ class SwipeTest extends React.Component {
         decodedString = decodedString.split('Ã').join('Ü');
         decodedString = decodedString.split('â¬Ü').join('‘');
         decodedString = decodedString.split('â¬"').join('’');
+        decodedString = decodedString.split('â').join('’');
+        decodedString = decodedString.split('â').join('‘');
 
         return decodedString;
     }
@@ -114,21 +109,18 @@ class SwipeTest extends React.Component {
         });
     }
 
-    fetchTestArticle() {
+    fetchWelcomeArticles() {
         let articleArray = this.state.articles;
 
         Axios({
-            method: 'POST',
-            url: SWIPER_API + '/title/',
-            headers: { 'Content-Type': 'application/json' },
-            data: {
-                "id": this.state.userCode
-            }
+            method: 'GET',
+            url: './data/welcome.json',
         })
         .then((response) => {
-            // handle success
-            articleArray.push(response.data[0]);
-            this.setState({ articles: articleArray });
+            response.data.forEach((event, index) =>{
+                articleArray.push(response.data[index]);
+                this.setState({ articles: articleArray });
+            });
         })
         .catch((error) => {
             console.log('error', error);
@@ -144,9 +136,26 @@ class SwipeTest extends React.Component {
         })
         .then((response) => {
             // handle success
-            const data = response.data[(this.state.articleCount / 5) - 1];
-            articleArray.push(data);
-            this.setState({ articles: articleArray });
+            if(this.state.articleCount / 5 > this.state.totalTests) {
+                this.setState({ 
+                    articleCount: 5
+                }, () =>{
+                    const data = response.data[(this.state.articleCount / 5) - 1];
+                    articleArray.push(data);
+                    this.setState({ 
+                        articles: articleArray,
+                        totalTests: response.data.length
+                    });
+                });
+            } else {
+                const data = response.data[(this.state.articleCount / 5) - 1];
+                articleArray.push(data);
+                this.setState({ 
+                    articles: articleArray,
+                    totalTests: response.data.length
+                });
+            }
+            
         })
         .catch((error) => {
             console.log('error', error);
@@ -157,23 +166,28 @@ class SwipeTest extends React.Component {
         // If function was triggered by buttons
         const currentCard = document.getElementById(this.state.articles[0].primary_key);
         if (button) currentCard.style[answer] = '-200vw';
+        let title = this.state.articles[0].title;
+        if(!title) {
+            console.log("ROEL FUCKED IT UP");
+            title = this.state.articles[0]['og-title'];
+        }
 
         // Setup popup
         this.setState({
-            infoScreenTitle: `${this.state.articles[0].title}`,
-            infoScreenDate: this.convertTime(this.state.articles[0].timestamp),
+            infoScreenTitle: `${title}`,
+            infoScreenDate: this.state.articles[0].timestamp,
             infoScreenSource: this.state.articles[0].url,
             infoScreenBody: this.state.articles[0].description,
             articleCount: this.state.articleCount += 1
         }, () => {
-            this.toggleInfoScreen(true);
-
-            const clickbait = this.state.articles[0].clickbait;
+            if(!this.state.articles[0].welcome) {
+                this.toggleInfoScreen(true);
+            }
 
             if (button) {
-                currentCard.addEventListener('transitionend', () => this.nextArticle(this.state.articles[0].primary_key, answer, clickbait))
+                currentCard.addEventListener('transitionend', () => this.nextArticle(this.state.articles[0], answer))
             } else {
-                this.nextArticle(this.state.articles[0].primary_key, answer, clickbait);
+                this.nextArticle(this.state.articles[0], answer);
             }
 
             if(this.state.articleCount % 5 === 0){
@@ -184,12 +198,12 @@ class SwipeTest extends React.Component {
         });
     }
 
-    nextArticle(primaryKey, postAnswer, clickbait) {
+    nextArticle(article, postAnswer) {
         let oldArray = this.state.articles;
 
         const answer = (postAnswer === 'nee') ? 0 : 1;
 
-        if(clickbait && postAnswer !== clickbait) {
+        if(article.clickbait && postAnswer !== article.clickbait) {
             Axios({
                 method: 'PATCH',
                 url: SWIPER_API + '/strike/',
@@ -198,14 +212,14 @@ class SwipeTest extends React.Component {
                     "userId": this.state.userCode,
                 }
             });
-        } else if (!clickbait) {
+        } else if (!article.clickbait && !article.welcome) {
             Axios({
                 method: 'POST',
                 url: SWIPER_API + '/swipe/',
                 headers: { 'Content-Type': 'application/json' },
                 data: {
                     "userId": this.state.userCode,
-                    "primaryKey": primaryKey,
+                    "primaryKey": article.primary_key,
                     "clickbait": answer
                 }
             });
@@ -227,7 +241,6 @@ class SwipeTest extends React.Component {
 
     stampToDate(data) {
         if(data) {
-            console.log(data);
             if([...data].length === 13) data = parseInt(data);
             return moment(data).format('DD-MM-YYYY');
         }
@@ -247,6 +260,7 @@ class SwipeTest extends React.Component {
                                 <SwipeCard
                                     disabled={disabled}
                                     title={this.decode(item.title)}
+                                    welcome={item.welcome}
                                     key={item.primary_key}
                                     id={item.primary_key}
                                     swipeLeft={() => { this.updateArticles(false, 'nee'); }}

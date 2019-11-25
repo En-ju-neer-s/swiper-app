@@ -8,7 +8,7 @@ export const SwipeCard = (props) => {
     const controls = useAnimation();
 
     function swipeClassifier(i) {
-        if (i.offset.x >= 250) {
+        if (i.offset.x >= 150) {
             controls.start({
                 x: '1000px',
                 transition: { duration: 0.6 },
@@ -16,7 +16,7 @@ export const SwipeCard = (props) => {
             setTimeout(() => {
                 props.swipeRight();
             }, 600);
-        } else if (i.offset.x <= -250) {
+        } else if (i.offset.x <= -150) {
             controls.start({
                 x: '-1000px',
                 transition: { duration: 0.6 },
@@ -77,20 +77,22 @@ export const SwipeCard = (props) => {
             <div className="swipe-card__heading">
                 <h1>{props.title}</h1>
             </div>
-            <div className="swipe-card__buttons">
-                <motion.div
-                    style={{ width: widthNee }}
-                    className="swipe-card__button swipe-card__button--nee"
-                    onClick={() => { buttonClick('no') }}>
-                    <motion.span style={{ opacity: opacityNee }}>Nee</motion.span>
-                </motion.div>
-                <motion.div
-                    style={{ width: widthJa }}
-                    className="swipe-card__button swipe-card__button--ja"
-                    onClick={() => { buttonClick('yes') }}>
-                    <motion.span style={{ opacity: opacityJa }}>Ja</motion.span>
-                </motion.div>
-            </div>
+            {!props.welcome &&
+                <div className="swipe-card__buttons">
+                    <motion.div
+                        style={{ width: widthNee }}
+                        className="swipe-card__button swipe-card__button--nee"
+                        onClick={() => { buttonClick('no') }}>
+                        <motion.span style={{ opacity: opacityNee }}>Nee</motion.span>
+                    </motion.div>
+                    <motion.div
+                        style={{ width: widthJa }}
+                        className="swipe-card__button swipe-card__button--ja"
+                        onClick={() => { buttonClick('yes') }}>
+                        <motion.span style={{ opacity: opacityJa }}>Ja</motion.span>
+                    </motion.div>
+                </div>
+            }
         </motion.div>
     )
 }
