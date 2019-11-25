@@ -2,36 +2,36 @@
     {
         "primary_key": "1",
         "clickbait": "ja", 
-        "url": "https://www.robintreur.nl", 
-        "title": "SXMgTWFyayBSdXR0ZSBob21vPw==", 
-        "description": "RGl0IHdhcyBlZW4gY2xpY2tiYWl0IHRlc3Qu"
+        "url": "https://www.nrc.nl/nieuws/2019/10/27/bin-laden-was-een-big-thing-maar-dit-is-groter-a3978176", 
+        "title": "4oCYQmluIExhZGVuIHdhcyBlZW4gYmlnIHRoaW5nLCBtYWFyIGRpdCBpcyBncm90ZXLigJk=", 
+        "description": "V2FzIGRlIHRvb24gdmFuIE9iYW1hIG5hIGRlIGRvb2QgdmFuIEJpbiBMYWRlbiBtZWxhbmNob2xpZWssIFRydW1wIGJlc2NocmlqZnQgQWwtQmFnaGRhZGnigJlzIGRvb2QgaW4gYmxvZWRlcmlnZSBkZXRhaWxzLg=="
     },
     {
         "primary_key": "2", 
         "clickbait": "nee",
-        "url": "https://www.robintreur.nl", 
-        "title": "RGl0IGlzIGdlZW4gY2xpY2tiYWl0", 
-        "description": "RGl0IHdhcyBlZW4gY2xpY2tiYWl0IHRlc3Qu"
+        "url": "https://joop.bnnvara.nl/nieuws/grote-steden-pleiten-voor-meer-geld-en-woningen-voor-daklozen", 
+        "title": "R3JvdGUgc3RlZGVuIHBsZWl0ZW4gdm9vciBtZWVyIGdlbGQgZW4gd29uaW5nZW4gdm9vciBkYWtsb3plbg0K", 
+        "description": "TmFkYXQgZWVyZGVyIGRlemUgd2VlayBoZXQgTGVnZXIgZGVzIEhlaWxzIGVlbiBvcHJvZXAgZGVlZCBvbSBtZWVyIHRlIGRvZW4gb20gZGFrbG9vc2hlaWQgdGUgdm9vcmtvbWVuLCB6aWpuIGhldCBudSBkZSB2aWVyIGdyb3RlIHN0ZWRlbiBkaWUgZXIgYmlqIGhldCBrYWJpbmV0IG9wIGFhbmRyaW5nZW4gb20gbWVlciBnZWxkIHVpdCB0ZSB0cmVra2VuIHZvb3IgZGUgZGFrbG96ZW5jcmlzaXMu"
     },
     {
         "primary_key": "3",
         "clickbait": "ja", 
-        "url": "https://www.robintreur.nl", 
-        "title": "RGl0IGlzIHdhYXJvbSBtZW5zZW4gZGVua2VuIGRhdCBNYXhpbWEgendhbmdlciBpcy4=", 
-        "description": "RGl0IHdhcyBlZW4gY2xpY2tiYWl0IHRlc3Qu"
+        "url": "https://www.telegraaf.nl/video/672301335/ik-schrok-toen-hij-z-n-mond-opendeed", 
+        "title": "4oCYSWsgc2Nocm9rIHRvZW4gaGlqIHrigJluIG1vbmQgb3BlbmRlZWTigJk=", 
+        "description": "RWVuIGZsaW5rZSB0YW5kYXJ0c3Jla2VuaW5nIG5hIGVlbiBHcmlla3NlIGNsYXNoIGluIEVpbmRob3Zlbi4gRGUgZWxsZWJvb2dzdG9vdCB0ZWdlbiBkZSBtb25kIHZhbiBBWi12ZXJkZWRpZ2VyIEhhdHppZGlha29zIGlzIG9ucyBNb21lbnQgdmFuIGRlIFdlZWsu"
     },
     {
         "primary_key": "4",
         "clickbait": "nee", 
-        "url": "https://www.robintreur.nl", 
-        "title": "RGl0IGlzIGdlZW4gY2xpY2tiYWl0", 
-        "description": "RGl0IHdhcyBlZW4gY2xpY2tiYWl0IHRlc3Qu"
+        "url": "https://www.nu.nl/economie/6006789/maker-van-expeditie-robinson-neemt-endemol-shine-group-over.html", 
+        "title": "TWFrZXIgdmFuIEV4cGVkaXRpZSBSb2JpbnNvbiBuZWVtdCBFbmRlbW9sIFNoaW5lIEdyb3VwIG92ZXI=", 
+        "description": "RGUgRnJhbnNlIHRlbGV2aXNpZW1hYXRzY2hhcHBpaiBCYW5pamF5IG5lZW10IGhldCBOZWRlcmxhbmRzLUJyaXRzZSBwcm9kdWN0aWVodWlzIEVuZGVtb2wgU2hpbmUgR3JvdXAgb3ZlciwgbWVsZHQgQmFuaWpheSB6YXRlcmRhZy4gSG9ldmVlbCBCYW5pamF5IG5lZXJsZWd0IHZvb3IgRW5kZW1vbCBTaGluZSBpcyBuaWV0IGJla2VuZDsgcGVyc2J1cmVhdSBCbG9vbWJlcmcgc2NocmlqZnQgZGF0IGVyIG1lZXIgZGFuIDIgbWlsamFyZCBkb2xsYXIgKHJ1aW0gMSw4IG1pbGphcmQgZXVybykgbWV0IGRlIGRlYWwgZ2Vtb2VpZCBpcy4="
     },
     {
         "primary_key": "5",
         "clickbait": "ja",
-        "url": "https://www.robintreur.nl", 
-        "title": "V2F0IFRydW1wIG51IGdlZGFhbiBoZWVmdCBnZWxvb2YgamUgbmlldC4=", 
-        "description": "RGl0IHdhcyBlZW4gY2xpY2tiYWl0IHRlc3Qu"
+        "url": "https://nos.nl/op3/artikel/2123348-je-gelooft-nooit-wat-facebook-aan-jouw-tijdlijn-gaat-veranderen.html", 
+        "title": "SmUgZ2Vsb29mdCBub29pdCB3YXQgRmFjZWJvb2sgYWFuIGpvdXcgdGlqZGxpam4gZ2FhdCB2ZXJhbmRlcmVuaXMgb25zIE1vbWVudCB2YW4gZGUgV2Vlay4=", 
+        "description": "IlRheWxvciBTd2lmdCB2ZXJiYWFzZGUgaWVkZXJlZW4gdG9lbiB6ZSBkw610IHR3ZWV0dGUiIG9mICJKZSBnZWxvb2Z0IG5vb2l0IHdhdCBkZXplIHZyb3V3IG92ZXJrd2FtIGJpaiBkZSBrYXBwZXIiLiBPcCBGYWNlYm9vayBiYXJzdCBoZXQgdmFuIGRpdCBzb29ydCBrb3BwZW4gYmlqIHZlcmhhbGVuLCBtYWFyIGRhYXIga29tdCB2ZXJhbmRlcmluZyBpbi4gSGV0IHNvY2lhbGUgbmV0d2VyayBnYWF0IG5hbWVsaWprIGRpdCBzb29ydCBjbGlja2JhaXQtYXJ0aWtlbGVuIGFhbnBha2tlbi4="
     }
 ]

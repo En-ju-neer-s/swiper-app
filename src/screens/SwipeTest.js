@@ -82,6 +82,8 @@ class SwipeTest extends React.Component {
         decodedString = decodedString.split('Ã').join('Ü');
         decodedString = decodedString.split('â¬Ü').join('‘');
         decodedString = decodedString.split('â¬"').join('’');
+        decodedString = decodedString.split('â').join('’');
+        decodedString = decodedString.split('â').join('‘');
 
         return decodedString;
     }
@@ -107,7 +109,7 @@ class SwipeTest extends React.Component {
         });
     }
 
-    fetchWelcomeArticles(count) {
+    fetchWelcomeArticles() {
         let articleArray = this.state.articles;
 
         Axios({
@@ -134,9 +136,26 @@ class SwipeTest extends React.Component {
         })
         .then((response) => {
             // handle success
-            const data = response.data[(this.state.articleCount / 5) - 1];
-            articleArray.push(data);
-            this.setState({ articles: articleArray });
+            if(this.state.articleCount / 5 > this.state.totalTests) {
+                this.setState({ 
+                    articleCount: 5
+                }, () =>{
+                    const data = response.data[(this.state.articleCount / 5) - 1];
+                    articleArray.push(data);
+                    this.setState({ 
+                        articles: articleArray,
+                        totalTests: response.data.length
+                    });
+                });
+            } else {
+                const data = response.data[(this.state.articleCount / 5) - 1];
+                articleArray.push(data);
+                this.setState({ 
+                    articles: articleArray,
+                    totalTests: response.data.length
+                });
+            }
+            
         })
         .catch((error) => {
             console.log('error', error);
@@ -147,10 +166,15 @@ class SwipeTest extends React.Component {
         // If function was triggered by buttons
         const currentCard = document.getElementById(this.state.articles[0].primary_key);
         if (button) currentCard.style[answer] = '-200vw';
+        let title = this.state.articles[0].title;
+        if(!title) {
+            console.log("ROEL FUCKED IT UP");
+            title = this.state.articles[0]['og-title'];
+        }
 
         // Setup popup
         this.setState({
-            infoScreenTitle: `${this.state.articles[0].title}`,
+            infoScreenTitle: `${title}`,
             infoScreenDate: this.state.articles[0].timestamp,
             infoScreenSource: this.state.articles[0].url,
             infoScreenBody: this.state.articles[0].description,
@@ -217,7 +241,6 @@ class SwipeTest extends React.Component {
 
     stampToDate(data) {
         if(data) {
-            console.log(data);
             if([...data].length === 13) data = parseInt(data);
             return moment(data).format('DD-MM-YYYY');
         }
