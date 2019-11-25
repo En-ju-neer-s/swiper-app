@@ -8,7 +8,7 @@ export const SwipeCard = (props) => {
     const controls = useAnimation();
 
     function swipeClassifier(i) {
-        if (i.offset.x >= 250) {
+        if (i.offset.x >= 150) {
             controls.start({
                 x: '1000px',
                 transition: { duration: 0.6 },
@@ -16,7 +16,7 @@ export const SwipeCard = (props) => {
             setTimeout(() => {
                 props.swipeRight();
             }, 600);
-        } else if (i.offset.x <= -250) {
+        } else if (i.offset.x <= -150) {
             controls.start({
                 x: '-1000px',
                 transition: { duration: 0.6 },
