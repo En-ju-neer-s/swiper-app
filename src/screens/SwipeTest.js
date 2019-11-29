@@ -80,6 +80,7 @@ class SwipeTest extends React.Component {
         decodedString = decodedString.split('Ã').join('Ù');
         decodedString = decodedString.split('Ã').join('Ú');
         decodedString = decodedString.split('Ã').join('Ü');
+        decodedString = decodedString.split('Ã¯').join('ï');
         decodedString = decodedString.split('â¬Ü').join('‘');
         decodedString = decodedString.split('â¬"').join('’');
         decodedString = decodedString.split('â').join('’');
@@ -229,7 +230,6 @@ class SwipeTest extends React.Component {
                 }
             });
         }
-        
 
         oldArray.shift();
         this.setState({ articles: oldArray });
@@ -261,10 +261,12 @@ class SwipeTest extends React.Component {
                     {articles.length > 0 &&
                         articles.map((item, index) => {
                             const disabled = (index === articles.length) ? false : true;
+                            const title = item.title ? item.title : item['og-title'];
+
                             return (
                                 <SwipeCard
                                     disabled={disabled}
-                                    title={this.decode(item.title)}
+                                    title={this.decode(title)}
                                     welcome={item.welcome}
                                     key={item.primary_key}
                                     id={item.primary_key}
