@@ -89,6 +89,10 @@ class SwipeTest extends React.Component {
         return decodedString;
     }
 
+    articleExists(articleArray, primary_key) {
+        return articleArray.some(item => item.primary_key === primary_key);
+    }
+
     fetchArticle() {
         let articleArray = this.state.articles;
 
@@ -102,8 +106,12 @@ class SwipeTest extends React.Component {
         })
         .then((response) => {
             // handle success
-            articleArray.push(response.data[0]);
-            this.setState({ articles: articleArray });
+            if(this.articleExists(articleArray, response.data[0].primary_key)){
+                this.fetchArticle();
+            } else {
+                articleArray.push(response.data[0]);
+                this.setState({ articles: articleArray });
+            }
         })
         .catch((error) => {
             console.log('error', error);
@@ -168,9 +176,7 @@ class SwipeTest extends React.Component {
         const currentCard = document.getElementById(this.state.articles[0].primary_key);
         if (button) currentCard.style[answer] = '-200vw';
         let title = this.state.articles[0].title;
-        if(!title) {
-            title = this.state.articles[0]['og-title'];
-        }
+        if(title === '') title = this.state.articles[0]['og-title'];
 
         // Setup popup
         this.setState({
