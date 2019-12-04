@@ -11,9 +11,9 @@ class Login extends React.Component {
         if (getCookie()) this.props.history.push('/');
     }
 
-    setUsername(){
+    setUsername() {
         const username = document.querySelector('[js-login-input]');
-        if(username.value) {
+        if (username.value) {
             setCookie(username.value);
 
             Axios({
@@ -36,7 +36,7 @@ class Login extends React.Component {
             <div className='s-login'>
                 <div className='login__field'>
                     <span className='login__label'>Gebruikersnaam:</span>
-                    <input name='username' placeholder="Type je gebruikersnaam" className='login__input' js-login-input='' />
+                    <input name='username' type="email" placeholder="Type je gebruikersnaam" className='login__input' js-login-input='' />
                 </div>
                 <Button
                     color='blue'
