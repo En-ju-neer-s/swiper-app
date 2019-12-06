@@ -46,7 +46,7 @@ class Login extends React.Component {
             <div className='s-login'>
                 <div className='login__field'>
                     <span className='login__label'>Gebruikersnaam:</span>
-                    <input name='username' type="email" placeholder="Type je gebruikersnaam" className='login__input' js-login-input='' />
+                    <input name='username' type="text" placeholder="Type je gebruikersnaam" className='login__input' js-login-input='' />
                 </div>
                 <Button
                     color='blue'
