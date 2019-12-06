@@ -26,7 +26,6 @@ class Login extends React.Component {
     setUsername(){
         if(this.username.value) {
             setCookie(this.username.value);
-
             Axios({
                 method: 'POST',
                 url: SWIPER_API + '/user/',
@@ -47,7 +46,7 @@ class Login extends React.Component {
             <div className='s-login'>
                 <div className='login__field'>
                     <span className='login__label'>Gebruikersnaam:</span>
-                    <input name='username' placeholder="Type je gebruikersnaam" className='login__input' js-login-input='' />
+                    <input name='username' type="email" placeholder="Type je gebruikersnaam" className='login__input' js-login-input='' />
                 </div>
                 <Button
                     color='blue'
