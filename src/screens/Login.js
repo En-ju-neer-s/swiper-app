@@ -11,18 +11,29 @@ class Login extends React.Component {
         if (getCookie()) this.props.history.push('/');
     }
 
+    componentDidMount() {
+        this.username = document.querySelector('[js-login-input]');
+        this.username.addEventListener('keyup', () => this.replaceEmojis());
+        document.addEventListener('mousemove', () => this.replaceEmojis());
+        document.addEventListener('click', () => this.replaceEmojis());
+        document.addEventListener('touchup', () => this.replaceEmojis());
+    }
+
+    replaceEmojis() {
+        this.username.value = this.username.value.replace(/(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/g, '');
+    }
+
     setUsername(){
-        const username = document.querySelector('[js-login-input]');
-        if(username.value) {
-            setCookie(username.value);
+        if(this.username.value) {
+            setCookie(this.username.value);
 
             Axios({
                 method: 'POST',
                 url: SWIPER_API + '/user/',
                 headers: { 'Content-Type': 'application/json' },
                 data: {
-                    "id": setCookie(username.value),
-                    "username": username.value
+                    "id": setCookie(this.username.value),
+                    "username": this.username.value
                 }
             });
 
