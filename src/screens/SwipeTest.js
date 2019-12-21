@@ -10,6 +10,8 @@ import { SWIPER_API } from '../constants';
 import { getCookie } from '../utilities/Cookie';
 import decode from '../utilities/Decode';
 
+let loadTimeout;
+const JS_LOADER = '[js-loader]';
 class SwipeTest extends React.Component {
     constructor(props) {
         super(props);
@@ -133,6 +135,10 @@ class SwipeTest extends React.Component {
 
     updateArticles(button, answer) {
         // If function was triggered by buttons
+        // close Modal
+        this.toggleInfoScreen(false);
+        clearTimeout(loadTimeout);
+
         const currentCard = document.getElementById(this.state.articles[0].primary_key);
         if (button) currentCard.style[answer] = '-200vw';
         let title = this.state.articles[0].title;
@@ -210,6 +216,18 @@ class SwipeTest extends React.Component {
         }
     }
 
+    countInfoShow(width, loader) {
+        loader.style.width = `${width}%`;
+
+        if (width < 100) {
+            loadTimeout = setTimeout(() => {
+                this.countInfoShow(width + 1, loader);
+            }, 100);
+        } else {
+            this.toggleInfoScreen(false);
+        }
+    }
+
     render() {
         const { articles } = this.state;
 
@@ -238,14 +256,16 @@ class SwipeTest extends React.Component {
                         })
                     }
                 </SwipeDeck>
+
                 {this.state.infoScreen &&
                     <InfoScreen
                         active={false}
                         title={decode(this.state.infoScreenTitle)}
                         date={this.stampToDate(this.state.infoScreenDate)}
                         source={this.state.infoScreenSource}
-                        body={decode(this.state.infoScreenBody)}
                         toggleInfoScreen={this.toggleInfoScreen}
+                        countInfoShow={this.countInfoShow}
+                        loadTimeout={loadTimeout}
                         buttonIcon={`cancel`}
                         buttonText={`Sluiten`} />
                 }
