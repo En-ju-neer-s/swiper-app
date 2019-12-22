@@ -11,18 +11,28 @@ class Login extends React.Component {
         if (getCookie()) this.props.history.push('/');
     }
 
-    setUsername() {
-        const username = document.querySelector('[js-login-input]');
-        if (username.value) {
-            setCookie(username.value);
+    componentDidMount() {
+        this.username = document.querySelector('[js-login-input]');
+        this.username.addEventListener('keyup', () => this.replaceEmojis());
+        document.addEventListener('mousemove', () => this.replaceEmojis());
+        document.addEventListener('click', () => this.replaceEmojis());
+        document.addEventListener('touchup', () => this.replaceEmojis());
+    }
 
+    replaceEmojis() {
+        this.username.value = this.username.value.replace(/(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/g, '');
+    }
+
+    setUsername(){
+        if(this.username.value) {
+            setCookie(this.username.value);
             Axios({
                 method: 'POST',
                 url: SWIPER_API + '/user/',
                 headers: { 'Content-Type': 'application/json' },
                 data: {
-                    "id": setCookie(username.value),
-                    "username": username.value
+                    "id": setCookie(this.username.value),
+                    "username": this.username.value
                 }
             });
 
@@ -36,7 +46,7 @@ class Login extends React.Component {
             <div className='s-login'>
                 <div className='login__field'>
                     <span className='login__label'>Gebruikersnaam:</span>
-                    <input name='username' type="email" placeholder="Type je gebruikersnaam" className='login__input' js-login-input='' />
+                    <input name='username' type="text" placeholder="Type je gebruikersnaam" className='login__input' js-login-input='' />
                 </div>
                 <Button
                     color='blue'

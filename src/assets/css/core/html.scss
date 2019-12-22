@@ -1,21 +1,22 @@
 body {
-    overflow-x: hidden;
+    overflow: hidden;
 
-    &::after {
-        content: "";
-        position: fixed;
-        background: rgba($color-black,0.5);
-        width: 100%;
-        height: 100%;
-        top: 0;
-        z-index: 200;
-        opacity: 0;
-        transition: ease 300ms;
-        pointer-events: none;
-        transition-property: opacity;
-    }
+
+    // &::after {
+    //     content: "";
+    //     position: fixed;
+    //     background: rgba($color-black,0.5);
+    //     width: 100%;
+    //     height: 100%;
+    //     top: 0;
+    //     z-index: 200;
+    //     opacity: 0;
+    //     transition: ease 300ms;
+    //     pointer-events: none;
+    //     transition-property: opacity;
+    // }
 }
 
-.has--modal body::after {
-    opacity: 1;
-}
+// .has--modal body::after {
+//     opacity: 1;
+// }
