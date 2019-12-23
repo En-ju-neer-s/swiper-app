@@ -139,33 +139,36 @@ class SwipeTest extends React.Component {
         this.toggleInfoScreen(false);
         clearTimeout(loadTimeout);
 
-        const currentCard = document.getElementById(this.state.articles[0].primary_key);
+        const article = this.state.articles[0];
+        const currentCard = document.getElementById(article.primary_key);
         if (button) currentCard.style[answer] = '-200vw';
-        let title = this.state.articles[0].title;
-        if (title === '') title = this.state.articles[0]['og-title'];
+
+        const title = (article.title || article.title !== "") ? article.title : article['og-title'];
 
         // Setup popup
         this.setState({
             infoScreenTitle: `${title}`,
-            infoScreenDate: this.state.articles[0].timestamp,
-            infoScreenSource: this.state.articles[0].url,
-            infoScreenBody: this.state.articles[0].description,
+            infoScreenDate: article.timestamp,
+            infoScreenSource: article.url,
+            infoScreenBody: article.description,
             articleCount: this.state.articleCount += 1
         }, () => {
-            if (!this.state.articles[0].welcome) {
+            if (!article.welcome) {
                 this.toggleInfoScreen(true);
             }
 
             if (button) {
-                currentCard.addEventListener('transitionend', () => this.nextArticle(this.state.articles[0], answer))
+                currentCard.addEventListener('transitionend', () => this.nextArticle(article, answer))
             } else {
-                this.nextArticle(this.state.articles[0], answer);
+                this.nextArticle(article, answer);
             }
 
             if (this.state.articleCount % 5 === 0) {
                 this.fetchTestArticle();
             } else {
-                this.fetchArticle();
+                for (let i = 0; i < 5; i++) {
+                    this.fetchArticle();
+                }
             }
         });
     }
@@ -238,7 +241,7 @@ class SwipeTest extends React.Component {
                     {articles.length > 0 &&
                         articles.map((item, index) => {
                             const disabled = (index === articles.length) ? false : true;
-                            const title = item.title ? item.title : item['og-title'];
+                            const title = (item.title || item.title !== "") ? item.title : item['og-title'];
 
                             return (
                                 <SwipeCard
