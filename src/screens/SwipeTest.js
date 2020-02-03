@@ -5,9 +5,11 @@ import SwipeCard from '../components/SwipeCard';
 import Button from '../components/Button';
 import Header from '../components/Header';
 import InfoScreen from '../components/InfoScreen';
+import Profile from '../components/Profile';
+import Progress from '../components/Progress';
 import Axios from 'axios';
 import { SWIPER_API } from '../constants';
-import { getCookie } from '../utilities/Cookie';
+import { getCookie, getSwipeTotal, setSwipeTotal } from '../utilities/Cookie';
 import decode from '../utilities/Decode';
 
 let loadTimeout;
@@ -18,12 +20,14 @@ class SwipeTest extends React.Component {
 
         this.state = ({
             articles: [],
+            userName: '',
             userCode: '',
+            userSwipes: '',
             infoScreen: false,
             infoScreenTitle: '',
             infoScreenDate: '',
             infoScreenSource: '',
-            infoScreenBody: ''
+            infoScreenBody: '',
         });
 
         this.updateArticles = this.updateArticles.bind(this);
@@ -36,6 +40,7 @@ class SwipeTest extends React.Component {
         const userCookie = getCookie().split('|');
         this.setState(
             {
+                userName: userCookie[0],
                 userCode: userCookie[1],
                 articleCount: 4
             }, () => {
@@ -155,6 +160,7 @@ class SwipeTest extends React.Component {
         }, () => {
             if (!article.welcome) {
                 this.toggleInfoScreen(true);
+                setSwipeTotal();
             }
 
             if (button) {
@@ -199,6 +205,7 @@ class SwipeTest extends React.Component {
             });
         }
 
+
         oldArray.shift();
         this.setState({ articles: oldArray });
     }
@@ -237,6 +244,9 @@ class SwipeTest extends React.Component {
         return (
             <div className='s-swipe-test'>
                 <Header title='Vind je dit clickbait?' />
+                <Profile
+                    username={this.state.userName}
+                    swipestotal={getSwipeTotal()} />
                 <SwipeDeck>
                     {articles.length > 0 &&
                         articles.map((item, index) => {
@@ -259,7 +269,7 @@ class SwipeTest extends React.Component {
                         })
                     }
                 </SwipeDeck>
-
+                <Progress swipestotal={getSwipeTotal()} />
                 {this.state.infoScreen &&
                     <InfoScreen
                         active={false}
