@@ -16,6 +16,7 @@ class ApiTest extends Component {
     render() {
         const { weather } = this.props;
 
+
         return (
             <div>
                 {weather.length > 0 &&
