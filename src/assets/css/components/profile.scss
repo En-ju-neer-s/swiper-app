@@ -1,0 +1,25 @@
+.profile {
+    max-width: 300px;
+    margin: 15px auto;
+    position: relative;
+    font-size: 30px;
+    color: $color-gray;
+}
+
+.profile__container {
+    position: absolute;
+    width: 100vw;
+    top: 50px;
+}
+
+.profile__name {
+    font-size: 20px;
+
+}
+
+.profile__swipes {
+    
+    b {
+        font-size: 50px;
+    }
+}
