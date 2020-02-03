@@ -7,7 +7,7 @@ class InfoScreen extends React.Component {
         super(props);
 
         this.InfoScreen = React.createRef();
-        if(this.props.source){
+        if (this.props.source) {
             this.sourceName = new URL(this.props.source).hostname.replace('www.', '');
         }
     }
@@ -18,7 +18,7 @@ class InfoScreen extends React.Component {
             this.loader = this.InfoScreen.current.querySelector(JS_LOADER);
             document.documentElement.classList.add('has--modal');
 
-            if(this.props.countInfoShow) {
+            if (this.props.countInfoShow) {
                 this.props.countInfoShow(0, this.loader);
             }
         }, 100);
@@ -50,7 +50,7 @@ class InfoScreen extends React.Component {
                         }
                         <div className="info-screen__source">
                             {source &&
-        <a href={source} target="_blank" className="c-source"><i className="u-icon icon--link"></i> Bron: {this.sourceName}</a>
+                                <a href={source} target="_blank" className="c-source"><i className="u-icon icon--link"></i> Bron: {this.sourceName}</a>
                             }
                         </div>
                     </div>
